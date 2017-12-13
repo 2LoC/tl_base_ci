@@ -1,2 +1,11 @@
-tags
+dep/
 build/
+install/
+tloc_auto*
+*.swp
+*kdev*
+*compile_commands.json*
+.ycm_extra_conf.py
+tags
+.undo*
+Session.vim
