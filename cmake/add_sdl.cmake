@@ -1,4 +1,4 @@
-include("${TLOC_BASE_CI_DIR}/cmake/common.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/common.cmake")
 
 include(ExternalProject)
 ExternalProject_Add(sdl
@@ -10,7 +10,7 @@ ExternalProject_Add(sdl
   SOURCE_DIR "${TLOC_DEP_SOURCE_DIR}/sdl"
 
   CMAKE_ARGS
-    -DCMAKE_INSTALL_PREFIX="${TLOC_INSTALL_PREFIX}/sdl"
+    -DCMAKE_INSTALL_PREFIX=${TLOC_INSTALL_PREFIX}/sdl
     -DCMAKE_DEBUG_POSTFIX=_d
 
   TEST_COMMAND ""
