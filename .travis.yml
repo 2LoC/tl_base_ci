@@ -1,0 +1,80 @@
+sudo: false
+language: cpp
+
+common_sources: &all_sources
+  - ubuntu-toolchain-r-test
+  - llvm-toolchain-trusty
+  - llvm-toolchain-trusty-3.9
+  - llvm-toolchain-trusty-4.0
+  - llbm-toolchain-trusty-5.0
+
+matrix:
+  include:
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages:
+            - clang-3.5
+      env: COMPILER='clang++-3.5'
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages:
+            - clang-3.6
+      env: COMPILER='clang++-3.6'
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages:
+            - clang-3.8
+      env: COMPILER='clang++-3.8'
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages:
+            - clang-3.9
+      env: COMPILER='clang++-3.9'
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages:
+            - clang-4.0
+      env: COMPILER='clang++-4.0'
+
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources: *all_sources
+          packages:
+            - clang-5.0
+      env: COMPILER='clang++-5.0'
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y
+  - sudo apt-get install -y libglew-dev
+  - sudo apt-get install -y libx11-dev
+  - sudo apt-get install -y xorg-dev libglu1-mesa-dev
+
+script:
+  - cd tests/cmake/
+  - mkdir build
+  - cd build
+  - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DCMAKE_INSTALL_PREFIX=../install ../
+  - make
+  - ctest
