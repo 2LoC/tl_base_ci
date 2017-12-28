@@ -1,4 +1,4 @@
-include("${CMAKE_CURRENT_LIST_DIR}/common.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/../common.cmake")
 
 include(ExternalProject)
 ExternalProject_Add(sdl
