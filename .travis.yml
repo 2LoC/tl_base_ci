@@ -6,7 +6,7 @@ common_sources: &all_sources
   - llvm-toolchain-trusty
   - llvm-toolchain-trusty-3.9
   - llvm-toolchain-trusty-4.0
-  - llbm-toolchain-trusty-5.0
+  - llvm-toolchain-trusty-5.0
 
 matrix:
   include:
@@ -75,6 +75,6 @@ script:
   - cd tests/cmake/
   - mkdir build
   - cd build
-  - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DCMAKE_INSTALL_PREFIX=../install ../
+  - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DTLOC_INSTALL_PREFIX=../install -DTLOC_ENABLED_DETAILED_LOGS=ON ../
   - make
   - ctest
