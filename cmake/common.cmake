@@ -24,6 +24,14 @@ option(TLOC_ENABLE_DETAILED_LOGS
   "Enable detailed logging for all CMake operations" OFF
   )
 
+option(TLOC_ENABLE_DETAILED_LOGS
+  "Enable detailed logging for all CMake operations" OFF
+  )
+
+option(TLOC_GENERATE_COMPILE_COMMANDS
+  "Used for autocomplete features, mainly on Linux" ON
+  )
+
 set(TLOC_CXX_COMPILER_PATH
   "${CMAKE_CXX_COMPILER}" CACHE
   PATH "Path to the C++ compiler"
@@ -46,3 +54,8 @@ function(TLOC_LOG_DETAIL MODE MSG)
 endfunction()
 
 # -----------------------------------------------------------------------------
+# compile_commands
+
+if(TLOC_GENERATE_COMPILE_COMMANDS)
+  set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
+endif()

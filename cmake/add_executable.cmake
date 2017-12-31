@@ -4,84 +4,79 @@
 # -----------------------------------------------------------------------------
 # Error Checking
 
-if(NOT DEFINED LIB_NAME)
-  TLOC_LOG(FATAL_ERROR "You forgot to set(LIB_NAME ...)")
+if(NOT DEFINED EXE_NAME)
+  TLOC_LOG(FATAL_ERROR "You forgot to set(EXE_NAME ...)")
 endif()
 
-if(NOT DEFINED ${LIB_NAME}_PUBLIC_HEADERS)
-  TLOC_LOG(FATAL_ERROR "You forgot to set(LIB_NAME_PUBLIC_HEADERS ...)")
+if(NOT DEFINED ${EXE_NAME}_SOURCE_FILES)
+  TLOC_LOG(FATAL_ERROR "You forgot to set(EXE_NAME_SOURCE_FILES ...)")
 endif()
 
-if(NOT DEFINED LIB_NAMESPACE)
-  TLOC_LOG(WARNING "You forgot to set(LIB_NAMESPACE ...)")
+if(NOT DEFINED EXE_NAMESPACE)
+  TLOC_LOG(WARNING "You forgot to set(EXE_NAMESPACE ...)")
 endif()
 
 # -----------------------------------------------------------------------------
 
 TLOC_LOG_DETAIL(STATUS "----------------------------------------------------------")
-TLOC_LOG       (STATUS "Adding ${LIB_NAME} library with namespace ${LIB_NAMESPACE}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Public Headers  : ${${LIB_NAME}_PUBLIC_HEADERS}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Private Headers : ${${LIB_NAME}_PRIVATE_HEADERS}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Source Files    : ${${LIB_NAME}_SOURCE_FILES}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Public Libs     : ${${LIB_NAME}_PUBLIC_LINK_LIBRARIES}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Private Libs    : ${${LIB_NAME}_PRIVATE_LINK_LIBRARIES}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Public Packages : ${${LIB_NAME}_PUBLIC_FIND_PACKAGES}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Private Packages: ${${LIB_NAME}_PRIVATE_FIND_PACKAGES}")
+TLOC_LOG       (STATUS "Adding ${EXE_NAME} executable with namespace ${EXE_NAMESPACE}")
+TLOC_LOG_DETAIL(STATUS "${EXE_NAME} Headers         : ${${EXE_NAME}_HEADERS}")
+TLOC_LOG_DETAIL(STATUS "${EXE_NAME} Source Files    : ${${EXE_NAME}_SOURCE_FILES}")
+TLOC_LOG_DETAIL(STATUS "${EXE_NAME} Link libraries  : ${${EXE_NAME}_LINK_LIBRARIES}")
+TLOC_LOG_DETAIL(STATUS "${EXE_NAME} Public Packages : ${${EXE_NAME}_PUBLIC_FIND_PACKAGES}")
+TLOC_LOG_DETAIL(STATUS "${EXE_NAME} Private Packages: ${${EXE_NAME}_PRIVATE_FIND_PACKAGES}")
 
 # -----------------------------------------------------------------------------
 
-add_library(${LIB_NAME}
-  ${${LIB_NAME}_PUBLIC_HEADERS}
-  ${${LIB_NAME}_PRIVATE_HEADERS}
-  ${${LIB_NAME}_SOURCE_FILES}
+foreach(PACKAGE ${${EXE_NAME}_PUBLIC_FIND_PACKAGES})
+  find_package(${PACKAGE} REQUIRED)
+endforeach()
+
+foreach(PACKAGE ${${EXE_NAME}_PRIVATE_FIND_PACKAGES})
+  find_package(${PACKAGE} REQUIRED)
+endforeach()
+
+# -----------------------------------------------------------------------------
+
+add_executable(${EXE_NAME}
+  ${${EXE_NAME}_HEADERS}
+  ${${EXE_NAME}_SOURCE_FILES}
   )
 
-set_target_properties(${LIB_NAME}
-  PROPERTIES PUBLIC_HEADER "${${LIB_NAME}_PUBLIC_HEADERS}"
-  )
-
-target_include_directories(${LIB_NAME}
+target_include_directories(${EXE_NAME}
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
     $<INSTALL_INTERFACE:include/>
   )
 
-target_link_libraries(${LIB_NAME}
+target_link_libraries(${EXE_NAME}
   PUBLIC
-    ${${LIB_NAME}_PUBLIC_LINK_LIBRARIES}
-  PRIVATE
-    ${${LIB_NAME}_PRIVATE_LINK_LIBRARIES}
+    ${${EXE_NAME}_LINK_LIBRARIES}
   )
 
-foreach(PACKAGE ${${LIB_NAME}_PUBLIC_FIND_PACKAGES})
-  target_link_libraries(${LIB_NAME}
+foreach(PACKAGE ${${EXE_NAME}_PUBLIC_FIND_PACKAGES})
+  target_link_libraries(${EXE_NAME}
     PUBLIC
       ${PACKAGE}
   )
 endforeach()
 
-foreach(PACKAGE ${${LIB_NAME}_PRIVATE_FIND_PACKAGES})
-  target_link_libraries(${LIB_NAME}
+foreach(PACKAGE ${${EXE_NAME}_PRIVATE_FIND_PACKAGES})
+  target_link_libraries(${EXE_NAME}
     PRIVATE
       ${PACKAGE}
   )
 endforeach()
 
-install(TARGETS ${LIB_NAME}
-  EXPORT ${LIB_NAME}Config
-  PUBLIC_HEADER DESTINATION "include/${LIB_NAME}"
-  RUNTIME       DESTINATION "bin/${LIB_NAME}/"
-  LIBRARY       DESTINATION "lib/${LIB_NAME}/"
-  ARCHIVE       DESTINATION "lib/${LIB_NAME}/static/"
+install(TARGETS ${EXE_NAME}
+  EXPORT ${EXE_NAME}Config
+  RUNTIME       DESTINATION "bin/${EXE_NAME}/"
   )
 
-install(EXPORT ${LIB_NAME}Config
-  NAMESPACE ${LIB_NAMESPACE}
+install(EXPORT ${EXE_NAME}Config
+  NAMESPACE ${EXE_NAMESPACE}
   DESTINATION "cmake/"
   )
-
-export(TARGETS ${LIB_NAME} FILE ${LIB_NAME}Config.cmake)
-export(PACKAGE ${LIB_NAME})
 
 # -----------------------------------------------------------------------------
 

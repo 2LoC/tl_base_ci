@@ -2,6 +2,6 @@
 
 namespace tl_base_ci_tests {
 
-  void A();
+  double fibonacci(double a_num);
 
 };
