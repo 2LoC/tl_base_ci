@@ -59,3 +59,8 @@ endfunction()
 if(TLOC_GENERATE_COMPILE_COMMANDS)
   set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
 endif()
+
+# -----------------------------------------------------------------------------
+# install
+
+set(CMAKE_INSTALL_PREFIX ${TLOC_INSTALL_PREFIX})

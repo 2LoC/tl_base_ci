@@ -2,6 +2,10 @@
 # See notes at eof.
 
 # -----------------------------------------------------------------------------
+
+include(${CMAKE_CURRENT_LIST_DIR}/common.cmake)
+
+# -----------------------------------------------------------------------------
 # Error Checking
 
 if(NOT DEFINED LIB_NAME)
@@ -73,11 +77,15 @@ install(TARGETS ${LIB_NAME}
   RUNTIME       DESTINATION "bin/${LIB_NAME}/"
   LIBRARY       DESTINATION "lib/${LIB_NAME}/"
   ARCHIVE       DESTINATION "lib/${LIB_NAME}/static/"
+
+  PERMISSIONS OWNER_READ
   )
 
 install(EXPORT ${LIB_NAME}Config
   NAMESPACE ${LIB_NAMESPACE}
   DESTINATION "cmake/"
+
+  PERMISSIONS OWNER_READ
   )
 
 export(TARGETS ${LIB_NAME} FILE ${LIB_NAME}Config.cmake)
