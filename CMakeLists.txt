@@ -6,10 +6,21 @@ project(tl_base_ci)
 
 # -----------------------------------------------------------------------------
 
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/common.cmake)
+set(LIB_NAME tl_base_ci)
+set(LIB_NAMESPACE tl_base_ci::)
 
-# -----------------------------------------------------------------------------
+set(${LIB_NAME}_HEADERS
+  "include/${LIB_NAME}/add_executable.cmake"
+  "include/${LIB_NAME}/add_interface.cmake"
+  "include/${LIB_NAME}/add_library.cmake"
+  "include/${LIB_NAME}/add_ycm_config.cmake"
+  "include/${LIB_NAME}/autogen.cmake"
+  "include/${LIB_NAME}/common.cmake"
+  "include/${LIB_NAME}/include_guard.cmake"
 
-install(DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/cmake/"
-  DESTINATION "${TLOC_INSTALL_PREFIX}/tl_base_ci/"
+  "include/${LIB_NAME}/projects/add_sdl.cmake"
   )
+
+set(${LIB_NAME}_INCLUDE_DIRECTORY "cmake/")
+
+include("${CMAKE_SOURCE_DIR}/include/${LIB_NAME}/add_interface.cmake")
