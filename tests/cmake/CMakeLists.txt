@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.1)
 
 project(tl_base_ci_tests)
 
-include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/projects/add_sdl.cmake")
-include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/add_ycm_config.cmake")
+include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/projects/tl_add_sdl.cmake")
+include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/tl_add_ycm_config.cmake")
 
 enable_testing()
 add_subdirectory("include/fibonacci")

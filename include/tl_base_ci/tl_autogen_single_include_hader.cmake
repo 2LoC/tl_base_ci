@@ -1,4 +1,8 @@
 # -----------------------------------------------------------------------------
+
+include(${CMAKE_CURRENT_LIST_DIR}/common.cmake)
+
+# -----------------------------------------------------------------------------
 # Autogenerate all inclusive header
 
 function(tl_autogen_all_inclusive_header HEADER_NAME HEADER_PATH GLOB_DIR)

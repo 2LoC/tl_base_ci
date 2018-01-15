@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 
-include(${CMAKE_CURRENT_LIST_DIR}/include_guard.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/tl_include_guard.cmake)
 cmake_include_guard()
 
 # -----------------------------------------------------------------------------

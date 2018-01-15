@@ -15,4 +15,4 @@ set(${LIB_NAME}_SOURCE_FILES
   "fib_long_double.cpp"
   )
 
-include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/add_library.cmake")
+include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/tl_add_library.cmake")

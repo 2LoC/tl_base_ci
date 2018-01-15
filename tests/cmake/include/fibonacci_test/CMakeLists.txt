@@ -13,6 +13,6 @@ set(${EXE_NAME}_SOURCE_FILES
   "main.cpp"
   )
 
-include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/add_executable.cmake")
+include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/tl_add_executable.cmake")
 
 add_test(${EXE_NAME}_test ${EXE_NAME})

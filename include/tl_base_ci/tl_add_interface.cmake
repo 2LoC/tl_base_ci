@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 
-include(${CMAKE_CURRENT_LIST_DIR}/common.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/tl_common.cmake)
 
 # -----------------------------------------------------------------------------
 # Error Checking

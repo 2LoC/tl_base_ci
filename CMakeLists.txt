@@ -10,17 +10,17 @@ set(LIB_NAME tl_base_ci)
 set(LIB_NAMESPACE tl_base_ci::)
 
 set(${LIB_NAME}_HEADERS
-  "include/${LIB_NAME}/add_executable.cmake"
-  "include/${LIB_NAME}/add_interface.cmake"
-  "include/${LIB_NAME}/add_library.cmake"
-  "include/${LIB_NAME}/add_ycm_config.cmake"
-  "include/${LIB_NAME}/autogen.cmake"
-  "include/${LIB_NAME}/common.cmake"
-  "include/${LIB_NAME}/include_guard.cmake"
+  "include/${LIB_NAME}/tl_add_executable.cmake"
+  "include/${LIB_NAME}/tl_add_interface.cmake"
+  "include/${LIB_NAME}/tl_add_library.cmake"
+  "include/${LIB_NAME}/tl_add_ycm_config.cmake"
+  "include/${LIB_NAME}/tl_autogen.cmake"
+  "include/${LIB_NAME}/tl_common.cmake"
+  "include/${LIB_NAME}/tl_include_guard.cmake"
 
-  "include/${LIB_NAME}/projects/add_sdl.cmake"
+  "include/${LIB_NAME}/projects/tl_add_sdl.cmake"
   )
 
-set(${LIB_NAME}_INCLUDE_DIRECTORY "cmake/")
+set(${LIB_NAME}_INCLUDE_DIRECTORY "include/")
 
-include("${CMAKE_SOURCE_DIR}/include/${LIB_NAME}/add_interface.cmake")
+include("${CMAKE_SOURCE_DIR}/include/${LIB_NAME}/tl_add_interface.cmake")
