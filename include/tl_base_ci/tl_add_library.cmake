@@ -16,14 +16,10 @@ if(NOT DEFINED ${LIB_NAME}_PUBLIC_HEADERS)
   TLOC_LOG(FATAL_ERROR "You forgot to set(LIB_NAME_PUBLIC_HEADERS ...)")
 endif()
 
-if(NOT DEFINED LIB_NAMESPACE)
-  TLOC_LOG(WARNING "You forgot to set(LIB_NAMESPACE ...)")
-endif()
-
 # -----------------------------------------------------------------------------
 
 TLOC_LOG_DETAIL(STATUS "----------------------------------------------------------")
-TLOC_LOG       (STATUS "Adding ${LIB_NAME} library with namespace ${LIB_NAMESPACE}")
+TLOC_LOG       (STATUS "Adding ${LIB_NAME} library")
 TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Public Headers  : ${${LIB_NAME}_PUBLIC_HEADERS}")
 TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Private Headers : ${${LIB_NAME}_PRIVATE_HEADERS}")
 TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Source Files    : ${${LIB_NAME}_SOURCE_FILES}")
@@ -82,7 +78,6 @@ install(TARGETS ${LIB_NAME}
   )
 
 install(EXPORT ${LIB_NAME}Config
-  NAMESPACE ${LIB_NAMESPACE}
   DESTINATION "cmake/"
 
   PERMISSIONS OWNER_READ

@@ -12,14 +12,10 @@ if(NOT DEFINED ${EXE_NAME}_SOURCE_FILES)
   TLOC_LOG(FATAL_ERROR "You forgot to set(EXE_NAME_SOURCE_FILES ...)")
 endif()
 
-if(NOT DEFINED EXE_NAMESPACE)
-  TLOC_LOG(WARNING "You forgot to set(EXE_NAMESPACE ...)")
-endif()
-
 # -----------------------------------------------------------------------------
 
 TLOC_LOG_DETAIL(STATUS "----------------------------------------------------------")
-TLOC_LOG       (STATUS "Adding ${EXE_NAME} executable with namespace ${EXE_NAMESPACE}")
+TLOC_LOG       (STATUS "Adding ${EXE_NAME} executable")
 TLOC_LOG_DETAIL(STATUS "${EXE_NAME} Headers         : ${${EXE_NAME}_HEADERS}")
 TLOC_LOG_DETAIL(STATUS "${EXE_NAME} Source Files    : ${${EXE_NAME}_SOURCE_FILES}")
 TLOC_LOG_DETAIL(STATUS "${EXE_NAME} Link libraries  : ${${EXE_NAME}_LINK_LIBRARIES}")
@@ -74,7 +70,6 @@ install(TARGETS ${EXE_NAME}
   )
 
 install(EXPORT ${EXE_NAME}Config
-  NAMESPACE ${EXE_NAMESPACE}
   DESTINATION "cmake/"
   )
 

@@ -14,14 +14,10 @@ if(NOT DEFINED ${LIB_NAME}_HEADERS )
     )
 endif()
 
-if(NOT DEFINED LIB_NAMESPACE)
-  TLOC_LOG(WARNING "You forgot to set(LIB_NAMESPACE ...)")
-endif()
-
 # -----------------------------------------------------------------------------
 
 TLOC_LOG_DETAIL(STATUS "----------------------------------------------------------")
-TLOC_LOG       (STATUS "Adding ${LIB_NAME} library with namespace ${LIB_NAMESPACE}")
+TLOC_LOG       (STATUS "Adding ${LIB_NAME} library")
 TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Headers       : ${${LIB_NAME}_HEADERS}")
 TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Link Libraries: ${${LIB_NAME}_LINK_LIBRARIES}")
 TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Packages      : ${${LIB_NAME}_FIND_PACKAGES}")
@@ -61,7 +57,6 @@ install(DIRECTORY ${${LIB_NAME}_INCLUDE_DIRECTORY}
   )
 
 install(EXPORT ${LIB_NAME}Config
-  NAMESPACE ${LIB_NAMESPACE}
   DESTINATION "cmake/"
 
   PERMISSIONS OWNER_READ
