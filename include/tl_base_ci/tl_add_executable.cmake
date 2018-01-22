@@ -1,83 +1,101 @@
 # Include this file to add a library in a standard tl_ way.
 # See notes at eof.
 
-# -----------------------------------------------------------------------------
-# Error Checking
+function(tl_add_executable)
 
-if(NOT DEFINED EXE_NAME)
-  TLOC_LOG(FATAL_ERROR "You forgot to set(EXE_NAME ...)")
-endif()
+  # -----------------------------------------------------------------------------
 
-if(NOT DEFINED ${EXE_NAME}_SOURCE_FILES)
-  TLOC_LOG(FATAL_ERROR "You forgot to set(EXE_NAME_SOURCE_FILES ...)")
-endif()
+  set(options "")
+  set(oneValueArgs EXE_NAME)
+  set(multiValueArgs
+        HEADER_FILES
+        SOURCE_FILES
+        LINK_LIBRARIES
+        PUBLIC_LINK_PACKAGES
+        PRIVATE_LINK_PACKAGES
+    )
 
-# -----------------------------------------------------------------------------
+  cmake_parse_arguments(PARSED_ARGS "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
 
-TLOC_LOG_DETAIL(STATUS "----------------------------------------------------------")
-TLOC_LOG       (STATUS "Adding ${EXE_NAME} executable")
-TLOC_LOG_DETAIL(STATUS "${EXE_NAME} Headers         : ${${EXE_NAME}_HEADERS}")
-TLOC_LOG_DETAIL(STATUS "${EXE_NAME} Source Files    : ${${EXE_NAME}_SOURCE_FILES}")
-TLOC_LOG_DETAIL(STATUS "${EXE_NAME} Link libraries  : ${${EXE_NAME}_LINK_LIBRARIES}")
-TLOC_LOG_DETAIL(STATUS "${EXE_NAME} Public Packages : ${${EXE_NAME}_PUBLIC_FIND_PACKAGES}")
-TLOC_LOG_DETAIL(STATUS "${EXE_NAME} Private Packages: ${${EXE_NAME}_PRIVATE_FIND_PACKAGES}")
+  # -----------------------------------------------------------------------------
+  # Error Checking
 
-# -----------------------------------------------------------------------------
+  if(NOT PARSED_ARGS_EXE_NAME)
+    TLOC_LOG(FATAL_ERROR "You must provide EXE_NAME")
+  endif()
 
-foreach(PACKAGE ${${EXE_NAME}_PUBLIC_FIND_PACKAGES})
-  find_package(${PACKAGE} REQUIRED)
-endforeach()
+  if(NOT PARSED_ARGS_SOURCE_FILES)
+    TLOC_LOG(FATAL_ERROR "You must provide SOURCE_FILES")
+  endif()
 
-foreach(PACKAGE ${${EXE_NAME}_PRIVATE_FIND_PACKAGES})
-  find_package(${PACKAGE} REQUIRED)
-endforeach()
+  # -----------------------------------------------------------------------------
 
-# -----------------------------------------------------------------------------
+  TLOC_LOG_DETAIL(STATUS "----------------------------------------------------------")
+  TLOC_LOG       (STATUS "Adding ${PARSED_ARGS_EXE_NAME} executable")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Headers         : ${PARSED_ARGS_HEADER_FILES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Source Files    : ${PARSED_ARGS_SOURCE_FILES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Link libraries  : ${PARSED_ARGS_LINK_LIBRARIES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Public Packages : ${PARSED_ARGS_PUBLIC_LINK_PACKAGES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Private Packages: ${PARSED_ARGS_PRIVATE_LINK_PACKAGES}")
 
-add_executable(${EXE_NAME}
-  ${${EXE_NAME}_HEADERS}
-  ${${EXE_NAME}_SOURCE_FILES}
-  )
+  # -----------------------------------------------------------------------------
 
-target_include_directories(${EXE_NAME}
-  PUBLIC
+  foreach(PACKAGE ${PARSED_ARGS_PUBLIC_LINK_PACKAGES})
+    find_package(${PACKAGE} REQUIRED)
+  endforeach()
+
+  foreach(PACKAGE ${PARSED_ARGS_PRIVATE_LINK_PACKAGES})
+    find_package(${PACKAGE} REQUIRED)
+  endforeach()
+
+  # -----------------------------------------------------------------------------
+
+  add_executable(${PARSED_ARGS_EXE_NAME}
+    ${PARSED_ARGS_HEADER_FILES}
+    ${PARSED_ARGS_SOURCE_FILES}
+    )
+
+  target_include_directories(${PARSED_ARGS_EXE_NAME}
+    PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
     $<INSTALL_INTERFACE:include/>
-  )
+    )
 
-target_link_libraries(${EXE_NAME}
-  PUBLIC
-    ${${EXE_NAME}_LINK_LIBRARIES}
-  )
-
-foreach(PACKAGE ${${EXE_NAME}_PUBLIC_FIND_PACKAGES})
-  target_link_libraries(${EXE_NAME}
+  target_link_libraries(${PARSED_ARGS_EXE_NAME}
     PUBLIC
+    ${PARSED_ARGS_LINK_LIBRARIES}
+    )
+
+  foreach(PACKAGE ${PARSED_ARGS_PUBLIC_LINK_PACKAGES})
+    target_link_libraries(${PARSED_ARGS_EXE_NAME}
+      PUBLIC
       ${PACKAGE}
-  )
-endforeach()
+      )
+  endforeach()
 
-foreach(PACKAGE ${${EXE_NAME}_PRIVATE_FIND_PACKAGES})
-  target_link_libraries(${EXE_NAME}
-    PRIVATE
+  foreach(PACKAGE ${PARSED_ARGS_PRIVATE_LINK_PACKAGES})
+    target_link_libraries(${PARSED_ARGS_EXE_NAME}
+      PRIVATE
       ${PACKAGE}
-  )
-endforeach()
+      )
+  endforeach()
 
-install(TARGETS ${EXE_NAME}
-  EXPORT ${EXE_NAME}Config
-  RUNTIME       DESTINATION "bin/${EXE_NAME}/"
-  )
+  install(TARGETS ${PARSED_ARGS_EXE_NAME}
+    EXPORT ${PARSED_ARGS_EXE_NAME}Config
+    RUNTIME DESTINATION "bin/${PARSED_ARGS_EXE_NAME}/"
+    )
 
-install(EXPORT ${EXE_NAME}Config
-  DESTINATION "cmake/"
-  )
+  install(EXPORT ${PARSED_ARGS_EXE_NAME}Config
+    DESTINATION "cmake/"
+    )
 
-# -----------------------------------------------------------------------------
+  # -----------------------------------------------------------------------------
 
-TLOC_LOG_DETAIL(STATUS "----------------------------------------------------------")
+  TLOC_LOG_DETAIL(STATUS "----------------------------------------------------------")
 
-# -----------------------------------------------------------------------------
+  # -----------------------------------------------------------------------------
+
+endfunction(tl_add_executable)
 
 # All tl_ libraries follow the following directory structure:
 #

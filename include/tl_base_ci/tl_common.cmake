@@ -53,6 +53,10 @@ function(TLOC_LOG_DETAIL MODE MSG)
   endif()
 endfunction()
 
+function(TLOC_LOG_LINE MODE)
+  TLOC_LOG_DETAIL(${MODE} "----------------------------------------------------------")
+endfunction()
+
 # -----------------------------------------------------------------------------
 # compile_commands
 

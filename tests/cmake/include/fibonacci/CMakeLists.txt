@@ -16,3 +16,8 @@ set(${LIB_NAME}_SOURCE_FILES
   )
 
 include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/tl_add_library.cmake")
+
+include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/tl_autogen_single_include_header.cmake")
+tl_autogen_single_include(${LIB_NAME}.h
+  ${CMAKE_CURRENT_LIST_DIR}
+  )
