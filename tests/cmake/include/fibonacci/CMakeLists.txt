@@ -1,5 +1,5 @@
 set(LIB_NAME fibonacci)
-set(LIB_NAMESPACE tl_base_ci::)
+set(LIB_NAMESPACE tl_)
 
 set(${LIB_NAME}_PUBLIC_HEADERS
   "fib_int.h"
@@ -16,6 +16,14 @@ set(${LIB_NAME}_SOURCE_FILES
   )
 
 include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/tl_add_library.cmake")
+tl_add_library(
+  LIB_NAME
+    ${LIB_NAME}
+  PUBLIC_HEADER_FILES
+    ${${LIB_NAME}_PUBLIC_HEADERS}
+  SOURCE_FILES
+    ${${LIB_NAME}_SOURCE_FILES}
+  )
 
 include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/tl_autogen_single_include_header.cmake")
 tl_autogen_single_include(${LIB_NAME}.h

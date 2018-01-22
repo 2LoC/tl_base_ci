@@ -3,68 +3,88 @@
 include(${CMAKE_CURRENT_LIST_DIR}/tl_common.cmake)
 
 # -----------------------------------------------------------------------------
-# Error Checking
 
-if(NOT DEFINED LIB_NAME)
-  TLOC_LOG(FATAL_ERROR "You forgot to set(LIB_NAME ...)")
-endif()
+function(tl_add_interface)
 
-if(NOT DEFINED ${LIB_NAME}_HEADERS )
-  TLOC_LOG(FATAL_ERROR "You forgot to set(LIB_NAME_HEADERS ...)"
+  # -----------------------------------------------------------------------------
+
+  set(options "")
+  set(one_value_args
+    LIB_NAME
     )
-endif()
+  set(multi_value_args
+    HEADER_FILES
+    LINK_LIBRARIES
+    FIND_PACKAGES
+    )
 
-# -----------------------------------------------------------------------------
+  cmake_parse_arguments(PARSED_ARGS "${options}" "${one_value_args}" "${multi_value_args}" ${ARGN} )
 
-TLOC_LOG_DETAIL(STATUS "----------------------------------------------------------")
-TLOC_LOG       (STATUS "Adding ${LIB_NAME} library")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Headers       : ${${LIB_NAME}_HEADERS}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Link Libraries: ${${LIB_NAME}_LINK_LIBRARIES}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Packages      : ${${LIB_NAME}_FIND_PACKAGES}")
+  # -----------------------------------------------------------------------------
 
-# -----------------------------------------------------------------------------
+  # -----------------------------------------------------------------------------
 
-add_library(${LIB_NAME} INTERFACE)
+  if(NOT PARSED_ARGS_LIB_NAME)
+    TLOC_LOG(FATAL_ERROR "You must provide LIB_NAME")
+  endif()
 
-target_sources(${LIB_NAME} INTERFACE
-  "${${LIB_NAM}_HEADERS}"
-  )
+  if(NOT PARSED_ARGS_HEADER_FILES)
+    TLOC_LOG(FATAL_ERROR "You forgot to set(LIB_NAME_HEADERS ...)"
+      )
+  endif()
 
-target_include_directories(${LIB_NAME} INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
-    $<INSTALL_INTERFACE:include/>
-  )
+  # -----------------------------------------------------------------------------
 
-target_link_libraries(${LIB_NAME} INTERFACE
-  ${${LIB_NAME}_LINK_LIBRARIES}
-  )
+  TLOC_LOG_LINE  (STATUS)
+  TLOC_LOG       (STATUS "Adding ${PARSED_ARGS_LIB_NAME} interface library")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Headers       : ${PARSED_ARGS_HEADER_FILES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Link Libraries: ${PARSED_ARGS_LINK_LIBRARIES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Packages      : ${PARSED_ARGS_FIND_PACKAGES}")
 
-foreach(PACKAGE ${${LIB_NAME}_FIND_PACKAGES})
-  target_link_libraries(${LIB_NAME} INTERFACE
+  # -----------------------------------------------------------------------------
+
+  add_library(${PARSED_ARGS_LIB_NAME} INTERFACE)
+
+  target_include_directories(${PARSED_ARGS_LIB_NAME}
+    INTERFACE
+      $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
+      $<INSTALL_INTERFACE:include/>
+    )
+
+  target_link_libraries(${PARSED_ARGS_LIB_NAME} INTERFACE
+    ${PARSED_ARGS_LINK_LIBRARIES}
+    )
+
+  foreach(PACKAGE ${PARSED_ARGS_FIND_PACKAGES})
+    target_link_libraries(${PARSED_ARGS_LIB_NAME} INTERFACE
       ${PACKAGE}
-  )
-endforeach()
+      )
+  endforeach()
 
-install(TARGETS ${LIB_NAME}
-  EXPORT ${LIB_NAME}Config
-  PUBLIC_HEADER DESTINATION "include/${LIB_NAME}"
-  )
+  install(TARGETS ${PARSED_ARGS_LIB_NAME}
+    EXPORT ${PARSED_ARGS_LIB_NAME}Config
+    PUBLIC_HEADER DESTINATION "include/${PARSED_ARGS_LIB_NAME}"
+    )
 
-install(DIRECTORY ${${LIB_NAME}_INCLUDE_DIRECTORY}
-  DESTINATION "include/${LIB_NAME}"
+  install(FILES "${PARSED_ARGS_HEADER_FILES}"
+    DESTINATION "include/${PARSED_ARGS_LIB_NAME}"
 
-  FILE_PERMISSIONS OWNER_READ
-  )
-
-install(EXPORT ${LIB_NAME}Config
-  DESTINATION "cmake/"
-
-  PERMISSIONS OWNER_READ
+    PERMISSIONS OWNER_READ
   )
 
-export(TARGETS ${LIB_NAME} FILE ${LIB_NAME}Config.cmake)
-export(PACKAGE ${LIB_NAME})
+  install(EXPORT ${PARSED_ARGS_LIB_NAME}Config
+    DESTINATION "cmake/"
 
-# -----------------------------------------------------------------------------
+    PERMISSIONS OWNER_READ
+    )
 
-TLOC_LOG_DETAIL(STATUS "----------------------------------------------------------")
+  export(TARGETS ${PARSED_ARGS_LIB_NAME} FILE ${PARSED_ARGS_LIB_NAME}Config.cmake)
+  export(PACKAGE ${PARSED_ARGS_LIB_NAME})
+
+  # -----------------------------------------------------------------------------
+
+  TLOC_LOG_LINE  (STATUS)
+
+  # -----------------------------------------------------------------------------
+
+endfunction(tl_add_interface)

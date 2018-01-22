@@ -1,96 +1,121 @@
-# Include this file to add a library in a standard tl_ way.
-# See notes at eof.
-
 # -----------------------------------------------------------------------------
 
 include(${CMAKE_CURRENT_LIST_DIR}/tl_common.cmake)
 
 # -----------------------------------------------------------------------------
-# Error Checking
 
-if(NOT DEFINED LIB_NAME)
-  TLOC_LOG(FATAL_ERROR "You forgot to set(LIB_NAME ...)")
-endif()
+function(tl_add_library)
 
-if(NOT DEFINED ${LIB_NAME}_PUBLIC_HEADERS)
-  TLOC_LOG(FATAL_ERROR "You forgot to set(LIB_NAME_PUBLIC_HEADERS ...)")
-endif()
+  # -----------------------------------------------------------------------------
 
-# -----------------------------------------------------------------------------
+  set(options "")
+  set(one_value_args
+    LIB_NAME
+    )
+  set(multi_value_args
+    PUBLIC_HEADER_FILES
+    PRIVATE_HEADER_FILES
+    SOURCE_FILES
+    PUBLIC_LINK_LIBRARIES
+    PRIVATE_LINK_LIBRARIES
+    PUBLIC_FIND_PACKAGES
+    PRIVATE_FIND_PACKAGES
+    )
 
-TLOC_LOG_DETAIL(STATUS "----------------------------------------------------------")
-TLOC_LOG       (STATUS "Adding ${LIB_NAME} library")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Public Headers  : ${${LIB_NAME}_PUBLIC_HEADERS}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Private Headers : ${${LIB_NAME}_PRIVATE_HEADERS}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Source Files    : ${${LIB_NAME}_SOURCE_FILES}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Public Libs     : ${${LIB_NAME}_PUBLIC_LINK_LIBRARIES}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Private Libs    : ${${LIB_NAME}_PRIVATE_LINK_LIBRARIES}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Public Packages : ${${LIB_NAME}_PUBLIC_FIND_PACKAGES}")
-TLOC_LOG_DETAIL(STATUS "${LIB_NAME} Private Packages: ${${LIB_NAME}_PRIVATE_FIND_PACKAGES}")
+  cmake_parse_arguments(PARSED_ARGS "${options}" "${one_value_args}" "${multi_value_args}" ${ARGN} )
 
-# -----------------------------------------------------------------------------
+  # -----------------------------------------------------------------------------
 
-add_library(${LIB_NAME}
-  ${${LIB_NAME}_PUBLIC_HEADERS}
-  ${${LIB_NAME}_PRIVATE_HEADERS}
-  ${${LIB_NAME}_SOURCE_FILES}
-  )
+  if(NOT PARSED_ARGS_LIB_NAME)
+    TLOC_LOG(FATAL_ERROR "You must provide LIB_NAME")
+  endif()
 
-set_target_properties(${LIB_NAME}
-  PROPERTIES PUBLIC_HEADER "${${LIB_NAME}_PUBLIC_HEADERS}"
-  )
+  if(NOT PARSED_ARGS_PUBLIC_HEADER_FILES)
+    TLOC_LOG(FATAL_ERROR "You must provide PUBLIC_HEADER_FILES")
+  endif()
 
-target_include_directories(${LIB_NAME}
-  PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
-    $<INSTALL_INTERFACE:include/>
-  )
+  if(NOT PARSED_ARGS_SOURCE_FILES)
+    TLOC_LOG(FATAL_ERROR "You must provide SOURCE_FILES (or use tl_add_interface)")
+  endif()
 
-target_link_libraries(${LIB_NAME}
-  PUBLIC
-    ${${LIB_NAME}_PUBLIC_LINK_LIBRARIES}
-  PRIVATE
-    ${${LIB_NAME}_PRIVATE_LINK_LIBRARIES}
-  )
+  # -----------------------------------------------------------------------------
 
-foreach(PACKAGE ${${LIB_NAME}_PUBLIC_FIND_PACKAGES})
-  target_link_libraries(${LIB_NAME}
+  TLOC_LOG_LINE  (STATUS)
+  TLOC_LOG       (STATUS "Adding ${PARSED_ARGS_LIB_NAME} library")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Public Headers  : ${PARSED_ARGS_PUBLIC_HEADER_FILES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Private Headers : ${PARSED_ARGS_PRIVATE_HEADER_FILES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Source Files    : ${PARSED_ARGS_SOURCE_FILES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Public Libs     : ${PARSED_ARGS_PUBLIC_LINK_LIBRARIES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Private Libs    : ${PARSED_ARGS_PRIVATE_LINK_LIBRARIES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Public Packages : ${PARSED_ARGS_PUBLIC_FIND_PACKAGES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Private Packages: ${PARSED_ARGS_PRIVATE_FIND_PACKAGES}")
+
+  # -----------------------------------------------------------------------------
+
+  add_library(${PARSED_ARGS_LIB_NAME}
+    ${PARSED_ARGS_PUBLIC_HEADER_FILES}
+    ${PARSED_ARGS_PRIVATE_HEADER_FILES}
+    ${PARSED_ARGS_SOURCE_FILES}
+    )
+
+  set_target_properties(${PARSED_ARGS_LIB_NAME}
+    PROPERTIES PUBLIC_HEADER "${PARSED_ARGS_PUBLIC_HEADER_FILES}"
+    )
+
+  target_include_directories(${PARSED_ARGS_LIB_NAME}
     PUBLIC
-      ${PACKAGE}
-  )
-endforeach()
+      $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
+      $<INSTALL_INTERFACE:include/>
+    )
 
-foreach(PACKAGE ${${LIB_NAME}_PRIVATE_FIND_PACKAGES})
-  target_link_libraries(${LIB_NAME}
+  target_link_libraries(${PARSED_ARGS_LIB_NAME}
+    PUBLIC
+      ${PARSED_ARGS_PUBLIC_LINK_LIBRARIES}
     PRIVATE
+      ${PARSED_ARGS_PRIVATE_LINK_LIBRARIES}
+    )
+
+  foreach(PACKAGE ${PARSED_ARGS_PUBLIC_FIND_PACKAGES})
+    target_link_libraries(${PARSED_ARGS_LIB_NAME}
+      PUBLIC
       ${PACKAGE}
-  )
-endforeach()
+      )
+  endforeach()
 
-install(TARGETS ${LIB_NAME}
-  EXPORT ${LIB_NAME}Config
-  PUBLIC_HEADER DESTINATION "include/${LIB_NAME}"
-  RUNTIME       DESTINATION "bin/${LIB_NAME}/"
-  LIBRARY       DESTINATION "lib/${LIB_NAME}/"
-  ARCHIVE       DESTINATION "lib/${LIB_NAME}/static/"
+  foreach(PACKAGE ${PARSED_ARGS_PRIVATE_FIND_PACKAGES})
+    target_link_libraries(${PARSED_ARGS_LIB_NAME}
+      PRIVATE
+      ${PACKAGE}
+      )
+  endforeach()
 
-  PERMISSIONS OWNER_READ
-  )
+  install(TARGETS ${PARSED_ARGS_LIB_NAME}
+    EXPORT ${PARSED_ARGS_LIB_NAME}Config
+    PUBLIC_HEADER DESTINATION "include/${PARSED_ARGS_LIB_NAME}"
+    RUNTIME       DESTINATION "bin/${PARSED_ARGS_LIB_NAME}/"
+    LIBRARY       DESTINATION "lib/${PARSED_ARGS_LIB_NAME}/"
+    ARCHIVE       DESTINATION "lib/${PARSED_ARGS_LIB_NAME}/static/"
 
-install(EXPORT ${LIB_NAME}Config
-  DESTINATION "cmake/"
+    PERMISSIONS OWNER_READ
+    )
 
-  PERMISSIONS OWNER_READ
-  )
+  install(EXPORT ${PARSED_ARGS_LIB_NAME}Config
+    DESTINATION "cmake/"
 
-export(TARGETS ${LIB_NAME} FILE ${LIB_NAME}Config.cmake)
-export(PACKAGE ${LIB_NAME})
+    PERMISSIONS OWNER_READ
+    )
 
-# -----------------------------------------------------------------------------
+  export(TARGETS ${PARSED_ARGS_LIB_NAME} FILE ${PARSED_ARGS_LIB_NAME}Config.cmake)
+  export(PACKAGE ${PARSED_ARGS_LIB_NAME})
 
-TLOC_LOG_DETAIL(STATUS "----------------------------------------------------------")
+  # -----------------------------------------------------------------------------
 
-# -----------------------------------------------------------------------------
+  TLOC_LOG_LINE(STATUS)
+
+  # -----------------------------------------------------------------------------
+
+
+endfunction(tl_add_library)
 
 # All tl_ libraries follow the following directory structure:
 #

@@ -1,21 +1,26 @@
-# Include this file to add a library in a standard tl_ way.
-# See notes at eof.
+# -----------------------------------------------------------------------------
+
+include(${CMAKE_CURRENT_LIST_DIR}/tl_common.cmake)
+
+# -----------------------------------------------------------------------------
 
 function(tl_add_executable)
 
   # -----------------------------------------------------------------------------
 
   set(options "")
-  set(oneValueArgs EXE_NAME)
-  set(multiValueArgs
-        HEADER_FILES
-        SOURCE_FILES
-        LINK_LIBRARIES
-        PUBLIC_LINK_PACKAGES
-        PRIVATE_LINK_PACKAGES
+  set(one_value_args
+    EXE_NAME
+    )
+  set(multi_value_args
+    HEADER_FILES
+    SOURCE_FILES
+    LINK_LIBRARIES
+    PUBLIC_FIND_PACKAGES
+    PRIVATE_FIND_PACKAGES
     )
 
-  cmake_parse_arguments(PARSED_ARGS "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
+  cmake_parse_arguments(PARSED_ARGS "${options}" "${one_value_args}" "${multi_value_args}" ${ARGN} )
 
   # -----------------------------------------------------------------------------
   # Error Checking
@@ -35,16 +40,16 @@ function(tl_add_executable)
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Headers         : ${PARSED_ARGS_HEADER_FILES}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Source Files    : ${PARSED_ARGS_SOURCE_FILES}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Link libraries  : ${PARSED_ARGS_LINK_LIBRARIES}")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Public Packages : ${PARSED_ARGS_PUBLIC_LINK_PACKAGES}")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Private Packages: ${PARSED_ARGS_PRIVATE_LINK_PACKAGES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Public Packages : ${PARSED_ARGS_PUBLIC_FIND_PACKAGES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Private Packages: ${PARSED_ARGS_PRIVATE_FIND_PACKAGES}")
 
   # -----------------------------------------------------------------------------
 
-  foreach(PACKAGE ${PARSED_ARGS_PUBLIC_LINK_PACKAGES})
+  foreach(PACKAGE ${PARSED_ARGS_PUBLIC_FIND_PACKAGES})
     find_package(${PACKAGE} REQUIRED)
   endforeach()
 
-  foreach(PACKAGE ${PARSED_ARGS_PRIVATE_LINK_PACKAGES})
+  foreach(PACKAGE ${PARSED_ARGS_PRIVATE_FIND_PACKAGES})
     find_package(${PACKAGE} REQUIRED)
   endforeach()
 
@@ -66,14 +71,14 @@ function(tl_add_executable)
     ${PARSED_ARGS_LINK_LIBRARIES}
     )
 
-  foreach(PACKAGE ${PARSED_ARGS_PUBLIC_LINK_PACKAGES})
+  foreach(PACKAGE ${PARSED_ARGS_PUBLIC_FIND_PACKAGES})
     target_link_libraries(${PARSED_ARGS_EXE_NAME}
       PUBLIC
       ${PACKAGE}
       )
   endforeach()
 
-  foreach(PACKAGE ${PARSED_ARGS_PRIVATE_LINK_PACKAGES})
+  foreach(PACKAGE ${PARSED_ARGS_PRIVATE_FIND_PACKAGES})
     target_link_libraries(${PARSED_ARGS_EXE_NAME}
       PRIVATE
       ${PACKAGE}
