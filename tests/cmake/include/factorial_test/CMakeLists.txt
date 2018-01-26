@@ -12,7 +12,7 @@ set(EXE_NAMESPACE tl_)
 tl_add_executable(
   EXE_NAME ${EXE_NAME}
   SOURCE_FILES "main.cpp"
-  PUBLIC_LINK_PACKAGES "factorial"
+  PUBLIC_FIND_PACKAGES "factorial"
   )
 
 enable_testing()
