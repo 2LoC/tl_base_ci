@@ -1,4 +1,8 @@
-sudo: false
+# ----------------------------------
+# auto-generated file, do not modify
+# ----------------------------------
+
+sudo: FALSE
 language: cpp
 
 common_sources: &all_sources
@@ -10,25 +14,7 @@ common_sources: &all_sources
 
 matrix:
   include:
-    - os: linux
-      compiler: clang
-      addons:
-        apt:
-          sources: *all_sources
-          packages:
-            - clang-3.5
-      env: COMPILER='clang++-3.5'
-
-    - os: linux
-      compiler: clang
-      addons:
-        apt:
-          sources: *all_sources
-          packages:
-            - clang-3.6
-      env: COMPILER='clang++-3.6'
-
-    - os: linux
+      -os: linux
       compiler: clang
       addons:
         apt:
@@ -37,16 +23,7 @@ matrix:
             - clang-3.8
       env: COMPILER='clang++-3.8'
 
-    - os: linux
-      compiler: clang
-      addons:
-        apt:
-          sources: *all_sources
-          packages:
-            - clang-3.9
-      env: COMPILER='clang++-3.9'
-
-    - os: linux
+    -os: linux
       compiler: clang
       addons:
         apt:
@@ -55,7 +32,7 @@ matrix:
             - clang-4.0
       env: COMPILER='clang++-4.0'
 
-    - os: linux
+    -os: linux
       compiler: clang
       addons:
         apt:
@@ -64,12 +41,11 @@ matrix:
             - clang-5.0
       env: COMPILER='clang++-5.0'
 
-before_install:
+before install:
   - sudo apt-get update -qq
   - sudo apt-get install -y
-  - sudo apt-get install -y libglew-dev
-  - sudo apt-get install -y libx11-dev
-  - sudo apt-get install -y xorg-dev libglu1-mesa-dev
+
+
 
 script:
   - cd tests/cmake/

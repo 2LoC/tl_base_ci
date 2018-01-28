@@ -34,6 +34,10 @@ function(tl_add_interface)
       )
   endif()
 
+  if(PARSED_ARGS_UNPARSED_ARGS)
+    TLOC_LOG(FATAL_ERROR "Unknown argument(s): ${PARSED_ARGS_UNPARSED_ARGS}")
+  endif()
+
   # -----------------------------------------------------------------------------
 
   TLOC_LOG_LINE  (STATUS)

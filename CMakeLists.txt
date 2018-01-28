@@ -32,3 +32,29 @@ tl_add_interface(
   HEADER_FILES ${${LIB_NAME}_HEADERS}
   )
 
+# -----------------------------------------------------------------------------
+
+include("${CMAKE_SOURCE_DIR}/include/${LIB_NAME}/tl_add_travis.cmake")
+
+set(TRAVIS_SCRIPT
+"\
+  - cd tests/cmake/
+  - mkdir build
+  - cd build
+  - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DTLOC_INSTALL_PREFIX=../install -DTLOC_ENABLED_DETAILED_LOGS=ON ../
+  - make install
+  - ctest
+  - cd ..
+  - cd include/factorial_test/
+  - mkdir build
+  - cd build
+  - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DTLOC_INSTALL_PREFIX=../install -DTLOC_ENABLED_DETAILED_LOGS=ON ../
+  - make install
+  - ctest
+"
+  )
+
+tl_add_travis(
+  LINUX_COMPILERS "clang-3.8;clang-4.0;clang-5.0"
+  SCRIPT ${TRAVIS_SCRIPT}
+  )
