@@ -116,8 +116,7 @@ common_sources: &all_sources
   - llvm-toolchain-trusty-5.0
 
 matrix:
-  include:
-  "
+  include:"
   )
 
 foreach(COMPILER IN LISTS PARSED_ARGS_LINUX_COMPILERS)
@@ -127,7 +126,7 @@ foreach(COMPILER IN LISTS PARSED_ARGS_LINUX_COMPILERS)
   endif()
 
   file(APPEND ${TRAVIS_FILE_DEST}
-"\
+"
     -os: linux
       compiler: ${LINUX_COMPILERS_${COMPILER}}
       addons:
