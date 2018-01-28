@@ -14,6 +14,7 @@ function(tl_add_interface)
     )
   set(multi_value_args
     HEADER_FILES
+    INCLUDE_DIRECTORIES
     LINK_LIBRARIES
     FIND_PACKAGES
     )
@@ -49,6 +50,7 @@ function(tl_add_interface)
     INTERFACE
       $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
       $<INSTALL_INTERFACE:include/>
+      ${PARSED_ARGS_INCLUDE_DIRECTORIES}
     )
 
   target_link_libraries(${PARSED_ARGS_LIB_NAME} INTERFACE
@@ -66,7 +68,7 @@ function(tl_add_interface)
     PUBLIC_HEADER DESTINATION "include/${PARSED_ARGS_LIB_NAME}"
     )
 
-  install(FILES "${PARSED_ARGS_HEADER_FILES}"
+  install(FILES ${PARSED_ARGS_HEADER_FILES}
     DESTINATION "include/${PARSED_ARGS_LIB_NAME}"
 
     PERMISSIONS OWNER_READ

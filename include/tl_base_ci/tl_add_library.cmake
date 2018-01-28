@@ -16,6 +16,7 @@ function(tl_add_library)
     PUBLIC_HEADER_FILES
     PRIVATE_HEADER_FILES
     SOURCE_FILES
+    INCLUDE_DIRECTORIES
     PUBLIC_LINK_LIBRARIES
     PRIVATE_LINK_LIBRARIES
     PUBLIC_FIND_PACKAGES
@@ -66,6 +67,7 @@ function(tl_add_library)
     PUBLIC
       $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
       $<INSTALL_INTERFACE:include/>
+      ${PARSED_ARGS_INCLUDE_DIRECTORIES}
     )
 
   target_link_libraries(${PARSED_ARGS_LIB_NAME}

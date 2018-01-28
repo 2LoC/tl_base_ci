@@ -15,6 +15,7 @@ function(tl_add_executable)
   set(multi_value_args
     HEADER_FILES
     SOURCE_FILES
+    INCLUDE_DIRECTORIES
     LINK_LIBRARIES
     PUBLIC_FIND_PACKAGES
     PRIVATE_FIND_PACKAGES
@@ -64,6 +65,7 @@ function(tl_add_executable)
     PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
     $<INSTALL_INTERFACE:include/>
+    ${PARSED_ARGS_INCLUDE_DIRECTORIES}
     )
 
   target_link_libraries(${PARSED_ARGS_EXE_NAME}
