@@ -22,11 +22,7 @@ option(TLOC_DEP_DISABLE_TESTS
   "Disable tests for all dependencies" ON
   )
 
-option(TLOC_ENABLE_DETAILED_LOGS
-  "Enable detailed logging for all CMake operations" OFF
-  )
-
-option(TLOC_ENABLE_DETAILED_LOGS
+option(TLOC_DETAILED_LOGS
   "Enable detailed logging for all CMake operations" OFF
   )
 
@@ -84,13 +80,25 @@ endfunction()
 # Logs with TLOC_LOG_DETAIL will not appear by default
 # MODE: same as CMake message(<mode>)
 function(TLOC_LOG_DETAIL MODE MSG)
-  if (TLOC_ENABLE_DETAILED_LOGS)
+  if (TLOC_DETAILED_LOGS)
     TLOC_LOG(${MODE} ${MSG})
   endif()
 endfunction()
 
 function(TLOC_LOG_LINE MODE)
   TLOC_LOG_DETAIL(${MODE} "----------------------------------------------------------")
+endfunction()
+
+function(TLOC_LOG_NEWLINE MODE)
+  TLOC_LOG_DETAIL(${MODE} " ")
+endfunction()
+
+function(TLOC_LOG_DETAIL_VAR MODE _VAR)
+  TLOC_LOG_DETAIL(${MODE} "${_VAR}: ${${_VAR}}")
+endfunction()
+
+function(TLOC_LOG_VAR MODE _VAR)
+  TLOC_LOG(${MODE} "${_VAR}: ${${_VAR}}")
 endfunction()
 
 # -----------------------------------------------------------------------------
@@ -111,3 +119,16 @@ set(CMAKE_INSTALL_PREFIX ${TLOC_INSTALL_PREFIX})
 MACRO(INSERT_INTO_MAP _NAME _KEY _VALUE)
   SET("${_NAME}_${_KEY}" "${_VALUE}")
 ENDMACRO(INSERT_INTO_MAP)
+
+# -----------------------------------------------------------------------------
+# Logging
+
+TLOC_LOG_LINE(STATUS)
+TLOC_LOG_DETAIL(STATUS "tl_common.cmake variables...")
+TLOC_LOG_DETAIL_VAR(STATUS TLOC_INSTALL_PREFIX)
+TLOC_LOG_DETAIL_VAR(STATUS TLOC_GENERATE_COMPILE_COMMANDS)
+TLOC_LOG_DETAIL_VAR(STATUS TLOC_DETAILED_LOGS)
+TLOC_LOG_DETAIL_VAR(STATUS TLOC_CXX_COMPILER_PATH)
+TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_SOURCE_DIR)
+TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_DISABLE_TESTS)
+TLOC_LOG_NEWLINE(STATUS)

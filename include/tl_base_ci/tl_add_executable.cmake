@@ -40,7 +40,7 @@ function(tl_add_executable)
 
   # -----------------------------------------------------------------------------
 
-  TLOC_LOG_DETAIL(STATUS "----------------------------------------------------------")
+  TLOC_LOG_LINE  (STATUS)
   TLOC_LOG       (STATUS "Adding ${PARSED_ARGS_EXE_NAME} executable")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Headers         : ${PARSED_ARGS_HEADER_FILES}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Source Files    : ${PARSED_ARGS_SOURCE_FILES}")
@@ -102,7 +102,7 @@ function(tl_add_executable)
 
   # -----------------------------------------------------------------------------
 
-  TLOC_LOG_DETAIL(STATUS "----------------------------------------------------------")
+  TLOC_LOG_NEWLINE(STATUS)
 
   # -----------------------------------------------------------------------------
 
