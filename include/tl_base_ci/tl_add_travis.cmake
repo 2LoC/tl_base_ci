@@ -127,7 +127,7 @@ foreach(COMPILER IN LISTS PARSED_ARGS_LINUX_COMPILERS)
 
   file(APPEND ${TRAVIS_FILE_DEST}
 "
-    -os: linux
+    - os: linux
       compiler: ${LINUX_COMPILERS_${COMPILER}}
       addons:
         apt:

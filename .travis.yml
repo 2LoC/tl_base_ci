@@ -14,7 +14,7 @@ common_sources: &all_sources
 
 matrix:
   include:
-    -os: linux
+    - os: linux
       compiler: clang
       addons:
         apt:
@@ -24,7 +24,7 @@ matrix:
       env: COMPILER='clang++-3.8'
 
 
-    -os: linux
+    - os: linux
       compiler: clang
       addons:
         apt:
@@ -34,7 +34,7 @@ matrix:
       env: COMPILER='clang++-4.0'
 
 
-    -os: linux
+    - os: linux
       compiler: clang
       addons:
         apt:
