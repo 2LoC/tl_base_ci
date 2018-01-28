@@ -2,7 +2,7 @@
 # auto-generated file, do not modify
 # ----------------------------------
 
-sudo: FALSE
+sudo: false
 language: cpp
 
 common_sources: &all_sources

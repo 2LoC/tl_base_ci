@@ -105,7 +105,7 @@ function(tl_add_travis)
 # auto-generated file, do not modify
 # ----------------------------------
 
-sudo: ${PARSED_ARGS_SUDO}
+sudo: ${TRAVIS_SUDO}
 language: ${PARSED_ARGS_LANGUAGE}
 
 common_sources: &all_sources
