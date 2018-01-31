@@ -30,6 +30,10 @@ option(TLOC_GENERATE_COMPILE_COMMANDS
   "Used for autocomplete features, mainly on Linux" ON
   )
 
+option(TLOC_IGNORE_FATAL_ERROR
+  "Ignore FATAL_ERRORs (only in TLOG_LOG)" OFF
+  )
+
 set(TLOC_CXX_COMPILER_PATH
   "${CMAKE_CXX_COMPILER}" CACHE
   PATH "Path to the C++ compiler"
@@ -69,6 +73,9 @@ function(TLOC_LOG MODE MSG)
     message(${MODE} "${BoldYellow}${MSG}${ColourReset}")
     message(${MODE} ${MSG})
   elseif(${MODE} STREQUAL "FATAL_ERROR" OR ${MODE} STREQUAL "SEND_ERROR")
+    if (TLOC_IGNORE_FATAL_ERROR)
+      set(MODE "WARNING")
+    endif()
     message(${MODE} "${BoldRed}${MSG}${ColourReset}")
   elseif(${MODE} STREQUAL "DEPRECATION")
     message(${MODE} "${Yellow}${MSG}${ColourReset}")
@@ -132,3 +139,20 @@ TLOC_LOG_DETAIL_VAR(STATUS TLOC_CXX_COMPILER_PATH)
 TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_SOURCE_DIR)
 TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_DISABLE_TESTS)
 TLOC_LOG_NEWLINE(STATUS)
+
+# -----------------------------------------------------------------------------
+# Error Checking
+
+function(TLOC_SANITIZE_AND_CHECK_DIRECTORY PATH_IN PATH_OUT)
+  get_filename_component(PATH_IN ${PATH_IN} ABSOLUTE)
+
+  if(NOT IS_DIRECTORY ${PATH_IN})
+    TLOC_LOG(FATAL_ERROR "Path is not a directory: ${PATH_IN}")
+  endif()
+
+  if(NOT EXISTS ${PATH_IN})
+    TLOC_LOG(FATAL_ERROR "Path does not exist: ${PATH_IN}")
+  endif()
+
+  set(${PATH_OUT} ${PATH_IN} PARENT_SCOPE)
+endfunction()

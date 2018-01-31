@@ -53,6 +53,8 @@ function(tl_add_travis)
     set(PARSED_ARGS_DESTINATION ${CMAKE_SOURCE_DIR})
   endif()
 
+  TLOC_SANITIZE_AND_CHECK_DIRECTORY(${PARSED_ARGS_DESTINATION} PARSED_ARGS_DESTINATION)
+
   if(NOT PARSED_ARGS_LINUX_COMPILERS)
     set(PARSED_ARGS_LINUX_COMPILERS "clang-3.8")
   endif()
@@ -64,7 +66,7 @@ function(tl_add_travis)
   # -----------------------------------------------------------------------------
 
   TLOC_LOG_LINE  (STATUS)
-  TLOC_LOG       (STATUS "Writing .travis.yml to ${PARSED_ARGS_DESTINATION}")
+  TLOC_LOG       (STATUS "Writing .travis.yml to ${PARSED_ARGS_DESTINATION}...")
   TLOC_LOG_DETAIL(STATUS "sudo: ${PARSED_ARGS_SUDO}")
   TLOC_LOG_DETAIL(STATUS "language: ${PARSED_ARGS_LANGUAGE}")
   TLOC_LOG_DETAIL(STATUS "linux compilers: ${PARSED_ARGS_LINUX_COMPILERS}")
