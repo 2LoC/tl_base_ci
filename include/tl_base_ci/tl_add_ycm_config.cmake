@@ -32,7 +32,7 @@ function(tl_add_ycm_config)
   # -----------------------------------------------------------------------------
 
   TLOC_LOG_LINE  (STATUS)
-  TLOC_LOG       (STATUS "Writing .ycm_extra_conf.py to ${PARSED_ARGS_DESTINATION}...")
+  TLOC_LOG       (STATUS "Writing .ycm_extra_conf.py to ${PARSED_ARGS_DESTINATION} ...")
 
   # -----------------------------------------------------------------------------
 

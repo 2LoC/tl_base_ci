@@ -65,8 +65,13 @@ function(tl_add_travis)
 
   # -----------------------------------------------------------------------------
 
+  set(TRAVIS_FILE_NAME ".travis.yml")
+  set(TRAVIS_FILE_DEST "${PARSED_ARGS_DESTINATION}/${TRAVIS_FILE_NAME}")
+
+  # -----------------------------------------------------------------------------
+
   TLOC_LOG_LINE  (STATUS)
-  TLOC_LOG       (STATUS "Writing .travis.yml to ${PARSED_ARGS_DESTINATION}...")
+  TLOC_LOG       (STATUS "Writing ${TRAVIS_FILE_NAME} to ${PARSED_ARGS_DESTINATION} ...")
   TLOC_LOG_DETAIL(STATUS "sudo: ${PARSED_ARGS_SUDO}")
   TLOC_LOG_DETAIL(STATUS "language: ${PARSED_ARGS_LANGUAGE}")
   TLOC_LOG_DETAIL(STATUS "linux compilers: ${PARSED_ARGS_LINUX_COMPILERS}")
@@ -100,7 +105,6 @@ function(tl_add_travis)
 
   # -----------------------------------------------------------------------------
 
-  set(TRAVIS_FILE_DEST "${PARSED_ARGS_DESTINATION}/.travis.yml")
   file(WRITE ${TRAVIS_FILE_DEST}
 "\
 # ----------------------------------

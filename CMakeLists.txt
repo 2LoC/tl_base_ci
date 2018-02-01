@@ -41,14 +41,14 @@ set(TRAVIS_SCRIPT
   - cd tests/cmake/
   - mkdir build
   - cd build
-  - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DTLOC_INSTALL_PREFIX=../install -DTLOC_ENABLED_DETAILED_LOGS=ON ../
+  - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DTLOC_INSTALL_PREFIX=../install -DTLOC_DETAILED_LOGS=ON ../
   - make install
   - ctest
   - cd ..
   - cd include/factorial_test/
   - mkdir build
   - cd build
-  - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DTLOC_INSTALL_PREFIX=../install -DTLOC_ENABLED_DETAILED_LOGS=ON ../
+  - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DTLOC_INSTALL_PREFIX=../install -DTLOC_DETAILED_LOGS=ON ../
   - make install
   - ctest
 "
