@@ -63,4 +63,6 @@ tl_add_travis(
 
 include("${CMAKE_SOURCE_DIR}/include/${LIB_NAME}/tl_add_gitignore.cmake")
 
-tl_add_gitignore()
+tl_add_gitignore(
+  IGNORE_LIST "tests/cmake/CMakeFiles/"
+  )

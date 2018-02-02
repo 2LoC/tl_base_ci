@@ -21,4 +21,4 @@ Session.vim
 # USER DEFINED IGNORE_LIST
 # ----------------------------------
 
-
+tests/cmake/CMakeFiles/
