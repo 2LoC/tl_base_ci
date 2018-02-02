@@ -1,7 +1,13 @@
-dep/
-build/
+# ----------------------------------
+# auto-generated file, do not modify
+# ----------------------------------
+
+# ----------------------------------
+# DEFAULT_IGNORE_LIST
+# ----------------------------------
+
+build*/
 install/
-tloc_auto*
 *.swp
 *kdev*
 *compile_commands.json*
@@ -9,3 +15,10 @@ tloc_auto*
 tags
 .undo*
 Session.vim
+.vim-bookmarks
+
+# ----------------------------------
+# USER DEFINED IGNORE_LIST
+# ----------------------------------
+
+

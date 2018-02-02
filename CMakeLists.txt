@@ -58,3 +58,9 @@ tl_add_travis(
   LINUX_COMPILERS "clang-3.8;clang-4.0;clang-5.0"
   SCRIPT ${TRAVIS_SCRIPT}
   )
+
+# -----------------------------------------------------------------------------
+
+include("${CMAKE_SOURCE_DIR}/include/${LIB_NAME}/tl_add_gitignore.cmake")
+
+tl_add_gitignore()

@@ -65,13 +65,13 @@ function(tl_add_travis)
 
   # -----------------------------------------------------------------------------
 
-  set(TRAVIS_FILE_NAME ".travis.yml")
-  set(TRAVIS_FILE_DEST "${PARSED_ARGS_DESTINATION}/${TRAVIS_FILE_NAME}")
+  set(FILE_NAME ".travis.yml")
+  set(FILE_DEST "${PARSED_ARGS_DESTINATION}/${FILE_NAME}")
 
   # -----------------------------------------------------------------------------
 
   TLOC_LOG_LINE  (STATUS)
-  TLOC_LOG       (STATUS "Writing ${TRAVIS_FILE_NAME} to ${PARSED_ARGS_DESTINATION} ...")
+  TLOC_LOG       (STATUS "Writing ${FILE_NAME} to ${PARSED_ARGS_DESTINATION} ...")
   TLOC_LOG_DETAIL(STATUS "sudo: ${PARSED_ARGS_SUDO}")
   TLOC_LOG_DETAIL(STATUS "language: ${PARSED_ARGS_LANGUAGE}")
   TLOC_LOG_DETAIL(STATUS "linux compilers: ${PARSED_ARGS_LINUX_COMPILERS}")
@@ -105,7 +105,7 @@ function(tl_add_travis)
 
   # -----------------------------------------------------------------------------
 
-  file(WRITE ${TRAVIS_FILE_DEST}
+  file(WRITE ${FILE_DEST}
 "\
 # ----------------------------------
 # auto-generated file, do not modify
@@ -131,7 +131,7 @@ foreach(COMPILER IN LISTS PARSED_ARGS_LINUX_COMPILERS)
     TLOC_LOG(WARNING "Unsupported compiler requested: ${COMPILER}")
   endif()
 
-  file(APPEND ${TRAVIS_FILE_DEST}
+  file(APPEND ${FILE_DEST}
 "
     - os: linux
       compiler: ${LINUX_COMPILERS_${COMPILER}}
@@ -146,7 +146,7 @@ foreach(COMPILER IN LISTS PARSED_ARGS_LINUX_COMPILERS)
   )
 endforeach()
 
-file(APPEND ${TRAVIS_FILE_DEST}
+file(APPEND ${FILE_DEST}
 "\
 before install:
 ${TRAVIS_APT_GET_UPDATE}
