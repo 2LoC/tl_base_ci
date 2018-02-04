@@ -2,30 +2,38 @@
 
 cmake_minimum_required(VERSION 3.1)
 
+# -----------------------------------------------------------------------------
+
+set(LIB_NAME tl_base_ci)
+set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/${LIB_NAME})
+
+include("${INCLUDE_DIR}/tl_common.cmake")
+include("${INCLUDE_DIR}/tl_add_interface.cmake")
+include("${INCLUDE_DIR}/tl_add_travis.cmake")
+include("${INCLUDE_DIR}/tl_add_gitignore.cmake")
+
+# -----------------------------------------------------------------------------
+
 project(tl_base_ci)
 
 # -----------------------------------------------------------------------------
 
-set(LIB_NAME tl_base_ci)
-
 set(${LIB_NAME}_HEADERS
-  "include/${LIB_NAME}/tl_add_executable.cmake"
-  "include/${LIB_NAME}/tl_add_interface.cmake"
-  "include/${LIB_NAME}/tl_add_library.cmake"
-  "include/${LIB_NAME}/tl_add_ycm_config.cmake"
-  "include/${LIB_NAME}/tl_autogen_single_include_cmake.cmake"
-  "include/${LIB_NAME}/tl_autogen_single_include_header.cmake"
-  "include/${LIB_NAME}/tl_common.cmake"
-  "include/${LIB_NAME}/tl_external_project.cmake"
-  "include/${LIB_NAME}/tl_find_package.cmake"
-  "include/${LIB_NAME}/tl_include_guard.cmake"
+  "${INCLUDE_DIR}/tl_add_executable.cmake"
+  "${INCLUDE_DIR}/tl_add_interface.cmake"
+  "${INCLUDE_DIR}/tl_add_library.cmake"
+  "${INCLUDE_DIR}/tl_add_ycm_config.cmake"
+  "${INCLUDE_DIR}/tl_autogen_single_include_cmake.cmake"
+  "${INCLUDE_DIR}/tl_autogen_single_include_header.cmake"
+  "${INCLUDE_DIR}/tl_common.cmake"
+  "${INCLUDE_DIR}/tl_external_project.cmake"
+  "${INCLUDE_DIR}/tl_find_package.cmake"
+  "${INCLUDE_DIR}/tl_include_guard.cmake"
 
-  "include/${LIB_NAME}/projects/tl_add_sdl.cmake"
+  "${INCLUDE_DIR}/projects/tl_add_sdl.cmake"
   )
 
 # -----------------------------------------------------------------------------
-
-include("${CMAKE_SOURCE_DIR}/include/${LIB_NAME}/tl_add_interface.cmake")
 
 tl_add_interface(
   LIB_NAME ${LIB_NAME}
@@ -33,8 +41,6 @@ tl_add_interface(
   )
 
 # -----------------------------------------------------------------------------
-
-include("${CMAKE_SOURCE_DIR}/include/${LIB_NAME}/tl_add_travis.cmake")
 
 set(TRAVIS_SCRIPT
 "\
@@ -60,8 +66,6 @@ tl_add_travis(
   )
 
 # -----------------------------------------------------------------------------
-
-include("${CMAKE_SOURCE_DIR}/include/${LIB_NAME}/tl_add_gitignore.cmake")
 
 tl_add_gitignore(
   IGNORE_LIST "tests/cmake/CMakeFiles/"

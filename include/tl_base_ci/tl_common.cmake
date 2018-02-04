@@ -155,3 +155,10 @@ function(TLOC_SANITIZE_AND_CHECK_DIRECTORY PATH_IN PATH_OUT)
 
   set(${PATH_OUT} ${PATH_IN} PARENT_SCOPE)
 endfunction()
+
+# -----------------------------------------------------------------------------
+# Prevent in source compilation
+
+if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+  TLOC_LOG(FATAL_ERROR "Please build in a directory that is not the source directory")
+endif()
