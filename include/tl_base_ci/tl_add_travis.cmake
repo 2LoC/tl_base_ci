@@ -59,6 +59,10 @@ function(tl_add_travis)
     set(PARSED_ARGS_LINUX_COMPILERS "clang-3.8")
   endif()
 
+  if(PARESD_ARGS_OSX_COMPILERS)
+    TLOC_LOG(WARNING "OSX compiler support not yet implemented")
+  endif()
+
   if(PARSED_ARGS_UNPARSED_ARGS)
     TLOC_LOG(FATAL_ERROR "Unknown argument(s): ${PARSED_ARGS_UNPARSED_ARGS}")
   endif()
@@ -72,12 +76,12 @@ function(tl_add_travis)
 
   TLOC_LOG_LINE  (STATUS)
   TLOC_LOG       (STATUS "Writing ${FILE_NAME} to ${PARSED_ARGS_DESTINATION} ...")
-  TLOC_LOG_DETAIL(STATUS "sudo: ${PARSED_ARGS_SUDO}")
-  TLOC_LOG_DETAIL(STATUS "language: ${PARSED_ARGS_LANGUAGE}")
+  TLOC_LOG_DETAIL(STATUS "sudo           : ${PARSED_ARGS_SUDO}")
+  TLOC_LOG_DETAIL(STATUS "language       : ${PARSED_ARGS_LANGUAGE}")
   TLOC_LOG_DETAIL(STATUS "linux compilers: ${PARSED_ARGS_LINUX_COMPILERS}")
-  TLOC_LOG_DETAIL(STATUS "apt-get gfx: ${PARSED_ARGS_APT_GET_INSTALL_GFX}")
-  TLOC_LOG_DETAIL(STATUS "before install: ${PARSED_ARGS_BEFORE_INSTALL}")
-  TLOC_LOG_DETAIL(STATUS "script: ${PARSED_ARGS_SCRIPT}")
+  TLOC_LOG_DETAIL(STATUS "apt-get gfx    : ${PARSED_ARGS_APT_GET_INSTALL_GFX}")
+  TLOC_LOG_DETAIL(STATUS "before install : ${PARSED_ARGS_BEFORE_INSTALL}")
+  TLOC_LOG_DETAIL(STATUS "script         : ${PARSED_ARGS_SCRIPT}")
 
   # -----------------------------------------------------------------------------
 
