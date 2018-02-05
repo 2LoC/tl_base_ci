@@ -81,7 +81,7 @@ function(tl_add_travis)
   TLOC_LOG_DETAIL(STATUS "linux compilers: ${PARSED_ARGS_LINUX_COMPILERS}")
   TLOC_LOG_DETAIL(STATUS "apt-get gfx    : ${PARSED_ARGS_APT_GET_INSTALL_GFX}")
   TLOC_LOG_DETAIL(STATUS "before install : ${PARSED_ARGS_BEFORE_INSTALL}")
-  TLOC_LOG_DETAIL(STATUS "script         : ${PARSED_ARGS_SCRIPT}")
+  TLOC_LOG_DETAIL(STATUS "script         : \n${PARSED_ARGS_SCRIPT}")
 
   # -----------------------------------------------------------------------------
 

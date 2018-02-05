@@ -26,6 +26,7 @@ tl_add_library(
   )
 
 include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/tl_autogen_single_include_header.cmake")
-tl_autogen_single_include(${LIB_NAME}.h
-  ${CMAKE_CURRENT_LIST_DIR}
+tl_autogen_single_include(
+  NAME ${LIB_NAME}.h
+  DESTINATION ${CMAKE_CURRENT_LIST_DIR}
   )

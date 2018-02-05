@@ -4,7 +4,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/tl_include_guard.cmake)
 cmake_include_guard()
 
 # -----------------------------------------------------------------------------
-# Common options and variables
+# common options and variables
 
 set(TLOC_DEP_SOURCE_DIR
   "${CMAKE_BINARY_DIR}" CACHE
@@ -40,7 +40,12 @@ set(TLOC_CXX_COMPILER_PATH
   )
 
 # -----------------------------------------------------------------------------
-# Colors
+# debug builds
+
+set(CMAKE_DEBUG_POSTFIX _d)
+
+# -----------------------------------------------------------------------------
+# colors
 
 if(NOT WIN32)
   string(ASCII 27 Esc)
@@ -63,7 +68,7 @@ if(NOT WIN32)
 endif()
 
 # -----------------------------------------------------------------------------
-# Logging
+# logging
 
 # MODE: same as CMake message(<mode>)
 function(TLOC_LOG MODE MSG)
@@ -87,7 +92,7 @@ endfunction()
 # MODE: same as CMake message(<mode>)
 function(TLOC_LOG_DETAIL MODE MSG)
   if (TLOC_DETAILED_LOGS)
-    TLOC_LOG(${MODE} ${MSG})
+    TLOC_LOG(${MODE} "${MSG}")
   endif()
 endfunction()
 
@@ -127,7 +132,7 @@ MACRO(INSERT_INTO_MAP _NAME _KEY _VALUE)
 ENDMACRO(INSERT_INTO_MAP)
 
 # -----------------------------------------------------------------------------
-# Logging
+# logging
 
 TLOC_LOG_LINE(STATUS)
 TLOC_LOG_DETAIL(STATUS "tl_common.cmake variables...")
@@ -140,7 +145,7 @@ TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_DISABLE_TESTS)
 TLOC_LOG_NEWLINE(STATUS)
 
 # -----------------------------------------------------------------------------
-# Error Checking
+# error checking
 
 function(TLOC_SANITIZE_AND_CHECK_DIRECTORY PATH_IN PATH_OUT)
   get_filename_component(PATH_IN ${PATH_IN} ABSOLUTE)
@@ -157,7 +162,7 @@ function(TLOC_SANITIZE_AND_CHECK_DIRECTORY PATH_IN PATH_OUT)
 endfunction()
 
 # -----------------------------------------------------------------------------
-# Prevent in source compilation
+# prevent in source compilation
 
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
   TLOC_LOG(FATAL_ERROR "Please build in a directory that is not the source directory")
