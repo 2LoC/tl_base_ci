@@ -23,6 +23,10 @@ tl_add_library(
     ${${LIB_NAME}_PUBLIC_HEADERS}
   SOURCE_FILES
     ${${LIB_NAME}_SOURCE_FILES}
+  BUILD_INTERFACE
+    ${CMAKE_SOURCE_DIR}/include/
+  INSTALL_INTERFACE
+    "install/include"
   )
 
 include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/tl_autogen_single_include_header.cmake")

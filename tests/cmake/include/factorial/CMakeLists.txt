@@ -11,4 +11,9 @@ tl_add_interface(
     ${LIB_NAME}
   HEADER_FILES
     ${${LIB_NAME}_HEADERS}
+  BUILD_INTERFACE
+    ${CMAKE_SOURCE_DIR}/include/
+  INSTALL_INTERFACE
+    "install/include"
+
   )
