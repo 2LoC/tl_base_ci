@@ -38,6 +38,7 @@ set(${LIB_NAME}_HEADERS
 tl_add_interface(
   LIB_NAME ${LIB_NAME}
   HEADER_FILES ${${LIB_NAME}_HEADERS}
+  BUILD_INTERFACE ${CMAKE_SOURCE_DIR}/include/
   )
 
 # -----------------------------------------------------------------------------

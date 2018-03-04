@@ -17,6 +17,8 @@ function(tl_add_interface)
     INCLUDE_DIRECTORIES
     LINK_LIBRARIES
     FIND_PACKAGES
+    BUILD_INTERFACE
+    INSTALL_INTERFACE
     )
 
   cmake_parse_arguments(PARSED_ARGS "${options}" "${one_value_args}" "${multi_value_args}" ${ARGN} )
@@ -34,6 +36,14 @@ function(tl_add_interface)
       )
   endif()
 
+  if(NOT PARSED_ARGS_BUILD_INTERFACE)
+    set(PARSED_ARGS_BUILD_INTERFACE ${CMAKE_SOURCE_DIR})
+  endif()
+
+  if(NOT PARSED_ARGS_INSTALL_INTERFACE)
+    set(PARSED_ARGS_INSTALL_INTERFACE "install/")
+  endif()
+
   if(PARSED_ARGS_UNPARSED_ARGS)
     TLOC_LOG(FATAL_ERROR "Unknown argument(s): ${PARSED_ARGS_UNPARSED_ARGS}")
   endif()
@@ -42,9 +52,12 @@ function(tl_add_interface)
 
   TLOC_LOG_LINE  (STATUS)
   TLOC_LOG       (STATUS "Adding ${PARSED_ARGS_LIB_NAME} interface library")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Headers       : ${PARSED_ARGS_HEADER_FILES}")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Link Libraries: ${PARSED_ARGS_LINK_LIBRARIES}")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Packages      : ${PARSED_ARGS_FIND_PACKAGES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Headers          : ${PARSED_ARGS_HEADER_FILES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Link Libraries   : ${PARSED_ARGS_LINK_LIBRARIES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Packages         : ${PARSED_ARGS_FIND_PACKAGES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Include Dirs     : ${PARSED_ARGS_INCLUDE_DIRECTORIES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Build Interface  : ${PARSED_ARGS_BUILD_INTERFACE}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Install Interface: ${PARSED_ARGS_INSTALL_INTERFACE}")
 
   # -----------------------------------------------------------------------------
 
@@ -52,8 +65,8 @@ function(tl_add_interface)
 
   target_include_directories(${PARSED_ARGS_LIB_NAME}
     INTERFACE
-      $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
-      $<INSTALL_INTERFACE:include/>
+      $<BUILD_INTERFACE:${PARSED_ARGS_BUILD_INTERFACE}>
+      $<INSTALL_INTERFACE:${PARSED_ARGS_INSTALL_INTERFACE}>
       ${PARSED_ARGS_INCLUDE_DIRECTORIES}
     )
 

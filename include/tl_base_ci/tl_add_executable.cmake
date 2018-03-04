@@ -19,6 +19,8 @@ function(tl_add_executable)
     LINK_LIBRARIES
     PUBLIC_FIND_PACKAGES
     PRIVATE_FIND_PACKAGES
+    BUILD_INTERFACE
+    INSTALL_INTERFACE
     )
 
   cmake_parse_arguments(PARSED_ARGS "${options}" "${one_value_args}" "${multi_value_args}" ${ARGN} )
@@ -34,6 +36,14 @@ function(tl_add_executable)
     TLOC_LOG(FATAL_ERROR "You must provide SOURCE_FILES")
   endif()
 
+  if(NOT PARSED_ARGS_BUILD_INTERFACE)
+    set(PARSED_ARGS_BUILD_INTERFACE ${CMAKE_SOURCE_DIR})
+  endif()
+
+  if(NOT PARSED_ARGS_INSTALL_INTERFACE)
+    set(PARSED_ARGS_INSTALL_INTERFACE "install/")
+  endif()
+
   if(PARSED_ARGS_UNPARSED_ARGS)
     TLOC_LOG(FATAL_ERROR "Unknown argument(s): ${PARSED_ARGS_UNPARSED_ARGS}")
   endif()
@@ -47,6 +57,9 @@ function(tl_add_executable)
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Link libraries  : ${PARSED_ARGS_LINK_LIBRARIES}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Public Packages : ${PARSED_ARGS_PUBLIC_FIND_PACKAGES}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Private Packages: ${PARSED_ARGS_PRIVATE_FIND_PACKAGES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Include Dirs     : ${PARSED_ARGS_INCLUDE_DIRECTORIES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Build Interface  : ${PARSED_ARGS_BUILD_INTERFACE}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Install Interface: ${PARSED_ARGS_INSTALL_INTERFACE}")
 
   # -----------------------------------------------------------------------------
 
@@ -67,7 +80,7 @@ function(tl_add_executable)
 
   target_include_directories(${PARSED_ARGS_EXE_NAME}
     PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/>
     $<INSTALL_INTERFACE:include/>
     ${PARSED_ARGS_INCLUDE_DIRECTORIES}
     )
