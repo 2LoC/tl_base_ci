@@ -18,6 +18,10 @@ set(TLOC_INSTALL_PREFIX
   )
 set(CMAKE_INSTALL_PREFIX ${TLOC_INSTALL_PREFIX})
 
+option(TLOC_DISABLE_TESTS
+  "Disable tests for all projects (excluding dependencies)" OFF
+  )
+
 option(TLOC_DEP_DISABLE_TESTS
   "Disable tests for all dependencies" ON
   )
