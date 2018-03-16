@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.1)
 # -----------------------------------------------------------------------------
 
 set(LIB_NAME tl_base_ci)
-set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/${LIB_NAME})
+set(INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include/${LIB_NAME}")
 
 include("${INCLUDE_DIR}/tl_common.cmake")
 include("${INCLUDE_DIR}/tl_add_interface.cmake")
@@ -38,7 +38,7 @@ set(${LIB_NAME}_HEADERS
 tl_add_interface(
   LIB_NAME ${LIB_NAME}
   HEADER_FILES ${${LIB_NAME}_HEADERS}
-  BUILD_INTERFACE ${CMAKE_SOURCE_DIR}/include/
+  BUILD_INTERFACE "${CMAKE_CURR_LIST_DIR}/include/"
   )
 
 # -----------------------------------------------------------------------------
