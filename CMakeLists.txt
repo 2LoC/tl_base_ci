@@ -20,12 +20,17 @@ project(tl_base_ci)
 
 set(${LIB_NAME}_HEADERS
   "${INCLUDE_DIR}/tl_add_executable.cmake"
+  "${INCLUDE_DIR}/tl_add_gitignore.cmake"
   "${INCLUDE_DIR}/tl_add_interface.cmake"
   "${INCLUDE_DIR}/tl_add_library.cmake"
+  "${INCLUDE_DIR}/tl_add_superbuild.cmake"
   "${INCLUDE_DIR}/tl_add_ycm_config.cmake"
+
   "${INCLUDE_DIR}/tl_autogen_single_include_cmake.cmake"
   "${INCLUDE_DIR}/tl_autogen_single_include_header.cmake"
+
   "${INCLUDE_DIR}/tl_common.cmake"
+
   "${INCLUDE_DIR}/tl_external_project.cmake"
   "${INCLUDE_DIR}/tl_find_package.cmake"
   "${INCLUDE_DIR}/tl_include_guard.cmake"
