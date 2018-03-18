@@ -69,6 +69,12 @@ endforeach()
 
 # -----------------------------------------------------------------------------
 
+if(EXISTS \"${PARSED_ARGS_DESTINATION}/CMakeLists_Pre.cmake\")
+  include(\"${PARSED_ARGS_DESTINATION}/CMakeLists_Pre.cmake\")
+endif()
+
+# -----------------------------------------------------------------------------
+
 project(SuperBuild)
 
 # -----------------------------------------------------------------------------
@@ -114,6 +120,12 @@ ExternalProject_Add(\${PROJ_NAME}_EXT
   )
 
 add_dependencies(\${PROJ_NAME}_EXT tl_base_ci_EXT)
+
+# -----------------------------------------------------------------------------
+
+if(EXISTS \"${PARSED_ARGS_DESTINATION}/CMakeLists_Post.cmake\")
+  include(\"${PARSED_ARGS_DESTINATION}/CMakeLists_Post.cmake\")
+endif()
 
 # -----------------------------------------------------------------------------
 ")
