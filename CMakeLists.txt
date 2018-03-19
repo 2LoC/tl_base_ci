@@ -33,7 +33,6 @@ set(${LIB_NAME}_HEADERS
 
   "${INCLUDE_DIR}/tl_external_project.cmake"
   "${INCLUDE_DIR}/tl_find_package.cmake"
-  "${INCLUDE_DIR}/tl_include_guard.cmake"
 
   "${INCLUDE_DIR}/projects/tl_add_sdl.cmake"
   )
