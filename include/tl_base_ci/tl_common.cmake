@@ -1,15 +1,10 @@
 # -----------------------------------------------------------------------------
-
-include_guard(GLOBAL)
-
-# -----------------------------------------------------------------------------
 # common options and variables
 
 set(TLOC_DEP_SOURCE_DIR
   "${CMAKE_BINARY_DIR}" CACHE
   PATH "Dependencies will be cloned/downloaded here"
   )
-set(CMAKE_BINARY_DIR ${TLOC_DEP_SOURCE_DIR})
 
 set(TLOC_INSTALL_PREFIX
   "${CMAKE_INSTALL_PREFIX}" CACHE
@@ -57,22 +52,22 @@ set(CMAKE_CXX_STANDARD 11)
 
 if(NOT WIN32)
   string(ASCII 27 Esc)
-  set(ColourReset "${Esc}[m" CACHE INTERNAL "")
-  set(ColourBold  "${Esc}[1m" CACHE INTERNAL "")
-  set(Red         "${Esc}[31m" CACHE INTERNAL "")
-  set(Green       "${Esc}[32m" CACHE INTERNAL "")
-  set(Yellow      "${Esc}[33m" CACHE INTERNAL "")
-  set(Blue        "${Esc}[34m" CACHE INTERNAL "")
-  set(Magenta     "${Esc}[35m" CACHE INTERNAL "")
-  set(Cyan        "${Esc}[36m" CACHE INTERNAL "")
-  set(White       "${Esc}[37m" CACHE INTERNAL "")
-  set(BoldRed     "${Esc}[1;31m" CACHE INTERNAL "")
-  set(BoldGreen   "${Esc}[1;32m" CACHE INTERNAL "")
-  set(BoldYellow  "${Esc}[1;33m" CACHE INTERNAL "")
-  set(BoldBlue    "${Esc}[1;34m" CACHE INTERNAL "")
-  set(BoldMagenta "${Esc}[1;35m" CACHE INTERNAL "")
-  set(BoldCyan    "${Esc}[1;36m" CACHE INTERNAL "")
-  set(BoldWhite   "${Esc}[1;37m" CACHE INTERNAL "")
+  set(ColourReset "${Esc}[m" PARENT_SCOPE)
+  set(ColourBold  "${Esc}[1m" PARENT_SCOPE)
+  set(Red         "${Esc}[31m" PARENT_SCOPE)
+  set(Green       "${Esc}[32m" PARENT_SCOPE)
+  set(Yellow      "${Esc}[33m" PARENT_SCOPE)
+  set(Blue        "${Esc}[34m" PARENT_SCOPE)
+  set(Magenta     "${Esc}[35m" PARENT_SCOPE)
+  set(Cyan        "${Esc}[36m" PARENT_SCOPE)
+  set(White       "${Esc}[37m" PARENT_SCOPE)
+  set(BoldRed     "${Esc}[1;31m" PARENT_SCOPE)
+  set(BoldGreen   "${Esc}[1;32m" PARENT_SCOPE)
+  set(BoldYellow  "${Esc}[1;33m" PARENT_SCOPE)
+  set(BoldBlue    "${Esc}[1;34m" PARENT_SCOPE)
+  set(BoldMagenta "${Esc}[1;35m" PARENT_SCOPE)
+  set(BoldCyan    "${Esc}[1;36m" PARENT_SCOPE)
+  set(BoldWhite   "${Esc}[1;37m" PARENT_SCOPE)
 endif()
 
 # -----------------------------------------------------------------------------
@@ -137,15 +132,18 @@ ENDMACRO(INSERT_INTO_MAP)
 # -----------------------------------------------------------------------------
 # logging
 
-TLOC_LOG_LINE(STATUS)
-TLOC_LOG_DETAIL(STATUS "tl_common.cmake variables...")
-TLOC_LOG_DETAIL_VAR(STATUS TLOC_INSTALL_PREFIX)
-TLOC_LOG_DETAIL_VAR(STATUS TLOC_GENERATE_COMPILE_COMMANDS)
-TLOC_LOG_DETAIL_VAR(STATUS TLOC_DETAILED_LOGS)
-TLOC_LOG_DETAIL_VAR(STATUS TLOC_CXX_COMPILER_PATH)
-TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_SOURCE_DIR)
-TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_DISABLE_TESTS)
-TLOC_LOG_NEWLINE(STATUS)
+if (NOT DEFINED _TLOC_COMMON_LOGGED_)
+  TLOC_LOG_LINE(STATUS)
+  TLOC_LOG_DETAIL(STATUS "tl_common.cmake variables...")
+  TLOC_LOG_DETAIL_VAR(STATUS TLOC_INSTALL_PREFIX)
+  TLOC_LOG_DETAIL_VAR(STATUS TLOC_GENERATE_COMPILE_COMMANDS)
+  TLOC_LOG_DETAIL_VAR(STATUS TLOC_DETAILED_LOGS)
+  TLOC_LOG_DETAIL_VAR(STATUS TLOC_CXX_COMPILER_PATH)
+  TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_SOURCE_DIR)
+  TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_DISABLE_TESTS)
+  TLOC_LOG_NEWLINE(STATUS)
+  set(_TLOC_COMMON_LOGGED_ ON)
+endif()
 
 # -----------------------------------------------------------------------------
 # error checking
