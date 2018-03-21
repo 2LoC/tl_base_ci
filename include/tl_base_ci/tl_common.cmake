@@ -1,4 +1,22 @@
 # -----------------------------------------------------------------------------
+# taken and modified from:
+#    https://github.com/toeb/cmakepp/blob/master/cmake/core/include_guard.cmake
+# include guard returns if the file was already included
+# usage :  at top of file write include_guard(${CMAKE_CURRENT_LIST_FILE})
+macro(include_guard)
+  #string(MAKE_C_IDENTIFIER "${__include_guard_file}" __include_guard_file)
+  get_property(is_included GLOBAL PROPERTY "ig_${CMAKE_CURRENT_LIST_FILE}")
+  if(is_included)
+    return()
+  endif()
+  set_property(GLOBAL PROPERTY "ig_${CMAKE_CURRENT_LIST_FILE}" true)
+endmacro()
+
+# -----------------------------------------------------------------------------
+
+include_guard()
+
+# -----------------------------------------------------------------------------
 # common options and variables
 
 set(TLOC_DEP_SOURCE_DIR
@@ -48,33 +66,35 @@ set(CMAKE_DEBUG_POSTFIX _d)
 set(CMAKE_CXX_STANDARD 11)
 
 # -----------------------------------------------------------------------------
-# colors
-
-if(NOT WIN32)
-  string(ASCII 27 Esc)
-  set(ColourReset "${Esc}[m" PARENT_SCOPE)
-  set(ColourBold  "${Esc}[1m" PARENT_SCOPE)
-  set(Red         "${Esc}[31m" PARENT_SCOPE)
-  set(Green       "${Esc}[32m" PARENT_SCOPE)
-  set(Yellow      "${Esc}[33m" PARENT_SCOPE)
-  set(Blue        "${Esc}[34m" PARENT_SCOPE)
-  set(Magenta     "${Esc}[35m" PARENT_SCOPE)
-  set(Cyan        "${Esc}[36m" PARENT_SCOPE)
-  set(White       "${Esc}[37m" PARENT_SCOPE)
-  set(BoldRed     "${Esc}[1;31m" PARENT_SCOPE)
-  set(BoldGreen   "${Esc}[1;32m" PARENT_SCOPE)
-  set(BoldYellow  "${Esc}[1;33m" PARENT_SCOPE)
-  set(BoldBlue    "${Esc}[1;34m" PARENT_SCOPE)
-  set(BoldMagenta "${Esc}[1;35m" PARENT_SCOPE)
-  set(BoldCyan    "${Esc}[1;36m" PARENT_SCOPE)
-  set(BoldWhite   "${Esc}[1;37m" PARENT_SCOPE)
-endif()
-
-# -----------------------------------------------------------------------------
 # logging
 
 # MODE: same as CMake message(<mode>)
 function(TLOC_LOG MODE MSG)
+
+  # ---------------------------------------------------------------------------
+  # colors
+
+  if(NOT WIN32)
+    string(ASCII 27 Esc)
+    set(ColourReset "${Esc}[m")
+    set(ColourBold  "${Esc}[1m")
+    set(Red         "${Esc}[31m")
+    set(Green       "${Esc}[32m")
+    set(Yellow      "${Esc}[33m")
+    set(Blue        "${Esc}[34m")
+    set(Magenta     "${Esc}[35m")
+    set(Cyan        "${Esc}[36m")
+    set(White       "${Esc}[37m")
+    set(BoldRed     "${Esc}[1;31m")
+    set(BoldGreen   "${Esc}[1;32m")
+    set(BoldYellow  "${Esc}[1;33m")
+    set(BoldBlue    "${Esc}[1;34m")
+    set(BoldMagenta "${Esc}[1;35m")
+    set(BoldCyan    "${Esc}[1;36m")
+    set(BoldWhite   "${Esc}[1;37m")
+  endif()
+
+
   if(${MODE} STREQUAL "STATUS")
     message(${MODE} "${BoldBlue}${MSG}${ColourReset}")
   elseif(${MODE} STREQUAL "WARNING")
@@ -132,7 +152,7 @@ ENDMACRO(INSERT_INTO_MAP)
 # -----------------------------------------------------------------------------
 # logging
 
-if (NOT DEFINED _TLOC_COMMON_LOGGED_)
+function(TLOC_LOG_COMMON_VARIABLES)
   TLOC_LOG_LINE(STATUS)
   TLOC_LOG_DETAIL(STATUS "tl_common.cmake variables...")
   TLOC_LOG_DETAIL_VAR(STATUS TLOC_INSTALL_PREFIX)
@@ -142,8 +162,7 @@ if (NOT DEFINED _TLOC_COMMON_LOGGED_)
   TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_SOURCE_DIR)
   TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_DISABLE_TESTS)
   TLOC_LOG_NEWLINE(STATUS)
-  set(_TLOC_COMMON_LOGGED_ ON)
-endif()
+endfunction()
 
 # -----------------------------------------------------------------------------
 # error checking

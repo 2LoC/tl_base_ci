@@ -174,6 +174,7 @@ function(TLOC_INCLUDE_TEMP FILE PATHS)
 endfunction()
 
 TLOC_INCLUDE_TEMP(\"/tl_base_ci/tl_common.cmake\" \${tl_base_ci_INCLUDE_DIRECTORIES})
+TLOC_LOG_COMMON_VARIABLES()
 
 # -----------------------------------------------------------------------------
 ")
