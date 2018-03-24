@@ -1,18 +1,4 @@
 # -----------------------------------------------------------------------------
-# taken and modified from:
-#    https://github.com/toeb/cmakepp/blob/master/cmake/core/include_guard.cmake
-# include guard returns if the file was already included
-# usage :  at top of file write include_guard(${CMAKE_CURRENT_LIST_FILE})
-macro(include_guard)
-  #string(MAKE_C_IDENTIFIER "${__include_guard_file}" __include_guard_file)
-  get_property(is_included GLOBAL PROPERTY "ig_${CMAKE_CURRENT_LIST_FILE}")
-  if(is_included)
-    return()
-  endif()
-  set_property(GLOBAL PROPERTY "ig_${CMAKE_CURRENT_LIST_FILE}" true)
-endmacro()
-
-# -----------------------------------------------------------------------------
 
 include_guard()
 
@@ -200,5 +186,5 @@ function(TLOC_INCLUDE FILE PATHS)
       return()
     endif()
   endforeach()
-  message(FATAL_ERROR "Could not find file ${FILE} to include in paths ${PATHS}")
+  TLOC_LOG(FATAL_ERROR "Could not find file ${FILE} to include in paths ${PATHS}")
 endfunction()

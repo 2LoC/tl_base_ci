@@ -85,6 +85,13 @@ function(tl_add_travis)
 
   # -----------------------------------------------------------------------------
 
+  # CMake v3.11 will have to be installed manually until Travis CI upgrades
+  # it's CMake install
+  set(CMAKE_EXEC_VERSION "v3.11")
+  set(CMAKE_EXEC_VERSION_SH "cmake-3.11.0-rc4-Linux-x86_64.sh")
+
+  # -----------------------------------------------------------------------------
+
   set(TRAVIS_SUDO "false")
   if (PARSED_ARGS_SUDO)
     set(TRAVIS_SUDO "true")
@@ -93,9 +100,9 @@ function(tl_add_travis)
   if(PARSED_ARGS_APT_GET_INSTALL_GFX)
     set(TRAVIS_APT_GET_INSTALL_GFX
 "\
-- sudo apt-get install -y libglew-dev
-- sudo apt-get install -y libx11-dev
-- sudo apt-get install -y xorg-dev libglu1-mesa-dev\
+  - sudo apt-get install -y libglew-dev
+  - sudo apt-get install -y libx11-dev
+  - sudo apt-get install -y xorg-dev libglu1-mesa-dev\
 "
       )
   endif()
@@ -104,6 +111,16 @@ function(tl_add_travis)
 "\
   - sudo apt-get update -qq
   - sudo apt-get install -y\
+"
+  )
+
+set(TRAVIS_CMAKE_UPDATE
+"\
+  - mkdir $HOME/usr
+  - export PATH=\"$HOME/usr/bin:$PATH\"
+  - wget https://cmake.org/files/${CMAKE_EXEC_VERSION}/${CMAKE_EXEC_VERSION_SH}
+  - chmod +x ${CMAKE_EXEC_VERSION_SH}
+  - ./${CMAKE_EXEC_VERSION_SH} --prefix=$HOME/usr --exclude-subdir --skip-license
 "
   )
 
@@ -155,6 +172,7 @@ file(APPEND ${FILE_DEST}
 before install:
 ${TRAVIS_APT_GET_UPDATE}
 ${TRAVIS_APT_GET_INSTALL_GFX}
+${TRAVIS_CMAKE_UPDATE}
 ${PARSED_ARGS_BEFORE_INSTALL}
 
 script:
