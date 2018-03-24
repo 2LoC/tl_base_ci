@@ -169,7 +169,7 @@ endforeach()
 
 file(APPEND ${FILE_DEST}
 "\
-before install:
+before_install:
 ${TRAVIS_APT_GET_UPDATE}
 ${TRAVIS_APT_GET_INSTALL_GFX}
 ${TRAVIS_CMAKE_UPDATE}
