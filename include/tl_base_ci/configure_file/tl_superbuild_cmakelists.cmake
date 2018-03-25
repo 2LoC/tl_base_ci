@@ -1,4 +1,4 @@
-# ----------------------------------
+# ---------------------------------
 # auto-generated file, do not modify
 # ----------------------------------
 
@@ -55,16 +55,16 @@ if(NOT tl_base_ci_FOUND OR TLOC_ALWAYS_FETCHCONTENT)
 
   set(FETCHCONTENT_QUIET OFF)
 
-  FetchContent_Declare(tl_base_ci_EXT
+  FetchContent_Declare(tl_base_ci_ext
     GIT_REPOSITORY "https://github.com/2LoC/tl_base_ci"
     GIT_TAG "master"
 
     CMAKE_ARGS ${CL_ARGS}
   )
 
-  FetchContent_GetProperties(tl_base_ci_EXT)
+  FetchContent_GetProperties(tl_base_ci_ext)
   if(NOT tl_base_ci_POPULATED)
-    FetchContent_Populate(tl_base_ci_EXT)
+    FetchContent_Populate(tl_base_ci_ext)
     add_subdirectory(${tl_base_ci_ext_SOURCE_DIR} ${tl_base_ci_ext_BINARY_DIR})
     list(APPEND tl_base_ci_INCLUDE_DIRECTORIES "${tl_base_ci_ext_SOURCE_DIR}/include")
   endif()

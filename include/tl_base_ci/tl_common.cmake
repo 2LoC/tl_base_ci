@@ -36,6 +36,10 @@ option(TLOC_IGNORE_FATAL_ERROR
   "Ignore FATAL_ERRORs (only in TLOG_LOG)" OFF
   )
 
+option(TLOC_ALWAYS_FETCHCONTENT
+  "find_package is not used regardless of whether the project exists already" OFF
+  )
+
 set(TLOC_CXX_COMPILER_PATH
   "${CMAKE_CXX_COMPILER}" CACHE
   PATH "Path to the C++ compiler"

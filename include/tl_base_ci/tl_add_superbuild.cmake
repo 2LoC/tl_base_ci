@@ -45,7 +45,6 @@ function(tl_add_superbuild)
   configure_file(
     "${CURRENT_LIST_DIR}/configure_file/tl_superbuild_cmakelists.cmake"
     ${FILE_DEST}
-    COPYONLY
     @ONLY
     )
 

@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 
-include(${CMAKE_CURRENT_LIST_DIR}/../tl_external_project.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../tl_fetchcontent.cmake)
 
 # -----------------------------------------------------------------------------
 
@@ -20,16 +20,17 @@ function(tl_add_sdl)
   # -----------------------------------------------------------------------------
 
   if(NOT PARSED_ARGS_GIT_TAG)
-    set(PARSED_ARGS_GIT_TAG "2f2d79f3428a26031c4b67c824571bef1633e58d")
+    set(PARSED_ARGS_GIT_TAG "master")
   endif()
 
   # -----------------------------------------------------------------------------
 
-  tl_external_project_add(
-    PROJ_NAME sdl_EXT
+  tl_fetchcontent(
+    PROJ_NAME sdl_ext
     PACKAGE_NAME SDL2
     GIT_REPOSITORY "https://github.com/2LoC/dep_sdl"
     GIT_TAG ${PARSED_ARGS_GIT_TAG}
+    QUIET OFF
   )
 
 endfunction()

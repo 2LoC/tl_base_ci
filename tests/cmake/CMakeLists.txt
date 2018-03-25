@@ -1,11 +1,11 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.11)
 
 project(tl_base_ci_tests)
 
-include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/projects/tl_add_sdl.cmake")
+include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/projects/tl_add_catch.cmake")
 include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/tl_add_ycm_config.cmake")
 
-tl_add_sdl()
+tl_add_catch()
 tl_add_ycm_config(DESTINATION ${CMAKE_SOURCE_DIR})
 
 enable_testing()

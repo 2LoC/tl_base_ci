@@ -1,10 +1,9 @@
 #include <factorial/factorial.h>
 
-#include <cassert>
+#define CATCH_CONFIG_MAIN
+#include <catch.hpp>
 
-int main()
+TEST_CASE("Factorial test", "")
 {
-  assert(tl_base_ci::factorial(5) == 120);
-
-  return 0;
+  CHECK(tl_base_ci::factorial(5) == 120);
 }

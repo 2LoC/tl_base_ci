@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 
-include(${CMAKE_CURRENT_LIST_DIR}/../tl_external_project.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../tl_fetchcontent.cmake)
 
 # -----------------------------------------------------------------------------
 
@@ -20,13 +20,13 @@ function(tl_add_catch)
   # -----------------------------------------------------------------------------
 
   if(NOT PARSED_ARGS_GIT_TAG)
-    set(PARSED_ARGS_GIT_TAG "0a34cc201ef28bf25c88b0062f331369596cb7b7")
+    set(PARSED_ARGS_GIT_TAG "master")
   endif()
 
   # -----------------------------------------------------------------------------
 
-  tl_external_project_add(
-    PROJ_NAME Catch_EXT
+  tl_fetchcontent(
+    PROJ_NAME catch_ext
     PACKAGE_NAME Catch2::Catch
     GIT_REPOSITORY "https://github.com/2LoC/dep_catch"
     GIT_TAG ${PARSED_ARGS_GIT_TAG}

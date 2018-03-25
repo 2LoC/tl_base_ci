@@ -36,6 +36,7 @@ set(${LIB_NAME}_HEADERS
   "${INCLUDE_DIR}/tl_find_package.cmake"
 
   "${INCLUDE_DIR}/configure_file/tl_superbuild_cmakelists.cmake"
+  "${INCLUDE_DIR}/configure_file/tl_ycm_extra_conf.py"
 
   "${INCLUDE_DIR}/projects/tl_add_sdl.cmake"
   "${INCLUDE_DIR}/projects/tl_add_catch.cmake"
