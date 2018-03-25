@@ -59,7 +59,9 @@ install/
 tags
 .undo*
 Session.vim
-.vim-bookmarks"
+.vim-bookmarks
+*user.cmake
+"
   )
   endif()
 

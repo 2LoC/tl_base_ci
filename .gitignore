@@ -16,9 +16,13 @@ tags
 .undo*
 Session.vim
 .vim-bookmarks
+*user.cmake
+
 
 # ----------------------------------
 # USER DEFINED IGNORE_LIST
 # ----------------------------------
 
 tests/cmake/CMakeFiles/
+*setup*.sh
+
