@@ -16,6 +16,14 @@ set(TLOC_INSTALL_PREFIX
   )
 set(CMAKE_INSTALL_PREFIX ${TLOC_INSTALL_PREFIX})
 
+set(TLOC_CMAKE_CXX_STANDARD "14"
+  "C++ version to build" OFF
+  )
+
+option(TLOC_CMAKE_CXX_STANDARD_REQUIRED
+  "May not work for all platforms" ON
+  )
+
 option(TLOC_DISABLE_TESTS
   "Disable tests for all projects (excluding dependencies)" OFF
   )
@@ -28,7 +36,7 @@ option(TLOC_DETAILED_LOGS
   "Enable detailed logging for all CMake operations" OFF
   )
 
-option(TLOC_GENERATE_COMPILE_COMMANDS
+option(TLOC_EXPORT_COMPILE_COMMANDS
   "Used for autocomplete features, mainly on Linux" ON
   )
 
@@ -126,13 +134,6 @@ function(TLOC_LOG_VAR MODE _VAR)
 endfunction()
 
 # -----------------------------------------------------------------------------
-# compile_commands
-
-if(TLOC_GENERATE_COMPILE_COMMANDS)
-  set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
-endif()
-
-# -----------------------------------------------------------------------------
 # emulating maps
 
 MACRO(INSERT_INTO_MAP _NAME _KEY _VALUE)
@@ -146,7 +147,7 @@ function(TLOC_LOG_COMMON_VARIABLES)
   TLOC_LOG_LINE(STATUS)
   TLOC_LOG_DETAIL(STATUS "tl_common.cmake variables...")
   TLOC_LOG_DETAIL_VAR(STATUS TLOC_INSTALL_PREFIX)
-  TLOC_LOG_DETAIL_VAR(STATUS TLOC_GENERATE_COMPILE_COMMANDS)
+  TLOC_LOG_DETAIL_VAR(STATUS TLOC_EXPORT_COMPILE_COMMANDS)
   TLOC_LOG_DETAIL_VAR(STATUS TLOC_DETAILED_LOGS)
   TLOC_LOG_DETAIL_VAR(STATUS TLOC_CXX_COMPILER_PATH)
   TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_SOURCE_DIR)

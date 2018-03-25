@@ -90,13 +90,20 @@ list(GET PATH_LIST 0 PROJ_NAME)
 
 # -----------------------------------------------------------------------------
 
+set(CMAKE_CXX_STANDARD ${TLOC_CMAKE_CXX_STANDARD})
+set(TLOC_CMAKE_CXX_STANDARD_REQUIRED ${TLOC_CMAKE_CXX_STANDARD_REQUIRED})
+
+project(${PROJ_NAME})
+set(CMAKE_EXPORT_COMPILE_COMMANDS @TLOC_EXPORT_COMPILE_COMMANDS@)
+
+# -----------------------------------------------------------------------------
+
 if(EXISTS "/home/samaursa/Repos/2LoC/tl_proj_template/CMakeLists_Post.cmake")
   include("/home/samaursa/Repos/2LoC/tl_proj_template/CMakeLists_Post.cmake")
 endif()
 
 # -----------------------------------------------------------------------------
 
-project(${PROJ_NAME})
 add_subdirectory(include/)
 
 # -----------------------------------------------------------------------------
