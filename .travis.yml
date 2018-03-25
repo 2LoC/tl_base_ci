@@ -21,6 +21,7 @@ matrix:
           sources: *all_sources
           packages:
             - clang-3.8
+            
       env: COMPILER='clang++-3.8'
 
 
@@ -31,6 +32,7 @@ matrix:
           sources: *all_sources
           packages:
             - clang-4.0
+            
       env: COMPILER='clang++-4.0'
 
 
@@ -41,6 +43,7 @@ matrix:
           sources: *all_sources
           packages:
             - clang-5.0
+            
       env: COMPILER='clang++-5.0'
 
 before_install:
