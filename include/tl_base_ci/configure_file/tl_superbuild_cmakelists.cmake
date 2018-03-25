@@ -90,11 +90,11 @@ list(GET PATH_LIST 0 PROJ_NAME)
 
 # -----------------------------------------------------------------------------
 
-set(CMAKE_CXX_STANDARD ${TLOC_CMAKE_CXX_STANDARD})
-set(TLOC_CMAKE_CXX_STANDARD_REQUIRED ${TLOC_CMAKE_CXX_STANDARD_REQUIRED})
-
 project(${PROJ_NAME})
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS @TLOC_EXPORT_COMPILE_COMMANDS@)
+set(CMAKE_CXX_STANDARD ${TLOC_CMAKE_CXX_STANDARD})
+set(CMAKE_CXX_STANDARD_REQUIRED ${TLOC_CMAKE_CXX_STANDARD_REQUIRED})
 
 # -----------------------------------------------------------------------------
 
