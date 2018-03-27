@@ -1,39 +1,86 @@
 # -----------------------------------------------------------------------------
 
-include(${CMAKE_CURRENT_LIST_DIR}/common.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/tl_common.cmake)
 
 # -----------------------------------------------------------------------------
 # Autogenerate all inclusive header
 
-function(tl_autogen_single_include_cmake
-    HEADER_NAME
-    HEADER_PATH
+function(tl_autogen_single_include_cmake)
+
+  # -----------------------------------------------------------------------------
+
+  set(options
+    RECURSE
+    )
+  set(one_value_args
+    NAME
+    DESTINATION
+    )
+  set(multi_value_args
+
     )
 
-  set(FULL_PATH "${HEADER_PATH}/${HEADER_NAME}")
+  cmake_parse_arguments(PARSED_ARGS "${options}" "${one_value_args}" "${multi_value_args}" ${ARGN} )
+
+  # -----------------------------------------------------------------------------
+  # Error Checking
+
+  if(NOT PARSED_ARGS_NAME)
+    TLOC_LOG(FATAL_ERROR "You must provide a NAME")
+  endif()
+
+  if(NOT PARSED_ARGS_DESTINATION)
+    TLOC_LOG(FATAL_ERROR "You must provide a DESTINATION folder")
+  endif()
+
+  TLOC_SANITIZE_AND_CHECK_DIRECTORY(${PARSED_ARGS_DESTINATION} PARSED_ARGS_DESTINATION)
+
+  if(PARSED_ARGS_UNPARSED_ARGS)
+    TLOC_LOG(FATAL_ERROR "Unknown argument(s): ${PARSED_ARGS_UNPARSED_ARGS}")
+  endif()
+
+  # -----------------------------------------------------------------------------
+
+  set(FILE_NAME ${PARSED_ARGS_NAME})
+  set(FILE_DEST ${PARSED_ARGS_DESTINATION})
+
+  # -----------------------------------------------------------------------------
+
+  set(FULL_PATH "${FILE_DEST}/${FILE_NAME}")
   file(REMOVE "${FULL_PATH}")
-  file(GLOB_RECURSE ALL_HEADERS RELATIVE "${HEADER_PATH}" *.cmake)
+  file(GLOB_RECURSE ALL_HEADERS RELATIVE ${FILE_DEST} "${FILE_DEST}/*.cmake")
 
-# -----------------------------------------------------------------------------
+  # -----------------------------------------------------------------------------
 
-TLOC_LOG_LINE  (STATUS)
-TLOC_LOG       (STATUS "Creating all inclusive CMake header: ${FULL_PATH}")
-TLOC_LOG_DETAIL(STATUS "Headers found: ${ALL_HEADERS}")
+  TLOC_LOG_LINE  (STATUS)
+  TLOC_LOG       (STATUS "Creating all inclusive CMake file in ${FULL_PATH} ...")
+  TLOC_LOG_DETAIL(STATUS "CMake files found: ${ALL_HEADERS}")
 
-# -----------------------------------------------------------------------------
+  # -----------------------------------------------------------------------------
 
   file(WRITE "${FULL_PATH}"
 "
-// Auto generated file, DO NOT overwrite
+# -----------------------------------------------------------------------------
+# Auto generated file, DO NOT overwrite
+# -----------------------------------------------------------------------------
 
-include(\"${CMAKE_CURRENT_LIST_DIR}/tl_include_guard.cmake\")
-cmake_include_guard()
+include_guard()
+
+# -----------------------------------------------------------------------------
+
 "
     )
 
   foreach(HEADER ${ALL_HEADERS})
     file(APPEND "${FULL_PATH}"
-      "include(\"${HEADER}\")\n"
+"include(\"\${CMAKE_CURRENT_LIST_DIR}/${HEADER}\")\n"
       )
-  endforeach(HEADER)
-endfunction(tl_autogen_single_include_cmake)
+  endforeach()
+
+  # -----------------------------------------------------------------------------
+
+  TLOC_LOG_LINE  (STATUS)
+
+  # -----------------------------------------------------------------------------
+
+endfunction()

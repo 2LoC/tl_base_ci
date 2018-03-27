@@ -90,6 +90,10 @@ list(GET PATH_LIST 0 PROJ_NAME)
 
 # -----------------------------------------------------------------------------
 
+if(NOT TLOC_DISABLE_TESTS)
+  enable_testing()
+endif()
+
 project(${PROJ_NAME})
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS @TLOC_EXPORT_COMPILE_COMMANDS@)

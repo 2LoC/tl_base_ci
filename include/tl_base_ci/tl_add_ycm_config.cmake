@@ -38,7 +38,7 @@ function(tl_add_ycm_config)
   # -----------------------------------------------------------------------------
 
   configure_file(
-    "${CURRENT_LIST_DIR}/configure_file/tl_ycm_extra_conf.py"
+    "${CURRENT_LIST_DIR}/configure_file/tl_ycm_extra_conf.py.in"
     "${PARSED_ARGS_DESTINATION}/.ycm_extra_conf.py"
     @ONLY
     )

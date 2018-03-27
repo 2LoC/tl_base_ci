@@ -63,7 +63,7 @@ function(tl_add_setup)
   if (NOT EXISTS ${VAR_FILE_DEST})
     set(LOG_USER_VAR_FILE "Not found, writing ${VAR_FILE_NAME} to ${VAR_FILE_DEST}")
     configure_file(
-      "${CURRENT_LIST_DIR}/configure_file/tl_setup_vars.cmake"
+      "${CURRENT_LIST_DIR}/configure_file/tl_setup_vars.cmake.in"
       ${VAR_FILE_DEST}
       @ONLY
     )

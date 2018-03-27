@@ -43,7 +43,7 @@ function(tl_add_superbuild)
   # -----------------------------------------------------------------------------
 
   configure_file(
-    "${CURRENT_LIST_DIR}/configure_file/tl_superbuild_cmakelists.cmake"
+    "${CURRENT_LIST_DIR}/configure_file/tl_superbuild_cmakelists.cmake.in"
     ${FILE_DEST}
     @ONLY
     )

@@ -21,7 +21,7 @@ function(tl_autogen_single_include)
   # -----------------------------------------------------------------------------
   # Error Checking
 
-  if(NOT PARSED_ARGS_DESTINATION)
+  if(NOT PARSED_ARGS_NAME)
     TLOC_LOG(FATAL_ERROR "You must provide a NAME")
   endif()
 

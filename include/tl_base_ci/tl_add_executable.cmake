@@ -80,8 +80,8 @@ function(tl_add_executable)
 
   target_include_directories(${PARSED_ARGS_EXE_NAME}
     PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/>
-    $<INSTALL_INTERFACE:include/>
+    $<BUILD_INTERFACE:${PARSED_ARGS_BUILD_INTERFACE}>
+    $<INSTALL_INTERFACE:${PARSED_ARGS_INSTALL_INTERFACE}>
     ${PARSED_ARGS_INCLUDE_DIRS}
     )
 

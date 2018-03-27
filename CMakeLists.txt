@@ -12,6 +12,7 @@ include("${INCLUDE_DIR}/tl_add_interface.cmake")
 include("${INCLUDE_DIR}/tl_add_travis.cmake")
 include("${INCLUDE_DIR}/tl_add_gitignore.cmake")
 include("${INCLUDE_DIR}/tl_add_setup.cmake")
+include("${INCLUDE_DIR}/tl_autogen_single_include_cmake.cmake")
 
 # -----------------------------------------------------------------------------
 
@@ -34,9 +35,9 @@ set(${LIB_NAME}_HEADERS
   "${INCLUDE_DIR}/tl_external_project.cmake"
   "${INCLUDE_DIR}/tl_fetchcontent.cmake"
 
-  "${INCLUDE_DIR}/configure_file/tl_setup_vars.cmake"
-  "${INCLUDE_DIR}/configure_file/tl_superbuild_cmakelists.cmake"
-  "${INCLUDE_DIR}/configure_file/tl_ycm_extra_conf.py"
+  "${INCLUDE_DIR}/configure_file/tl_setup_vars.cmake.in"
+  "${INCLUDE_DIR}/configure_file/tl_superbuild_cmakelists.cmake.in"
+  "${INCLUDE_DIR}/configure_file/tl_ycm_extra_conf.py.in"
 
   "${INCLUDE_DIR}/projects/tl_add_sdl.cmake"
   "${INCLUDE_DIR}/projects/tl_add_catch.cmake"
@@ -91,4 +92,11 @@ tl_add_setup(
   BUILD_DIR "build"
   BUILD_TYPE "Debug"
   CL_ARGS ${CL_ARGS}
+  )
+
+# -----------------------------------------------------------------------------
+
+tl_autogen_single_include_cmake(
+  NAME "tl_base_ci.cmake"
+  DESTINATION "${INCLUDE_DIR}/"
   )
