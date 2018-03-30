@@ -9,6 +9,7 @@ include_guard()
 
 include("${CMAKE_CURRENT_LIST_DIR}/projects/tl_add_catch.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/projects/tl_add_sdl.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/tl_add_ctagsignore.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/tl_add_executable.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/tl_add_gitignore.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/tl_add_interface.cmake")

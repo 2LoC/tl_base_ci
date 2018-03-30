@@ -4,7 +4,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/tl_common.cmake)
 
 # -----------------------------------------------------------------------------
 
-function(tl_add_gitignore)
+function(tl_add_ctagsignore)
 
   # -----------------------------------------------------------------------------
 
@@ -12,6 +12,7 @@ function(tl_add_gitignore)
     NO_DEFAULTS
     )
   set(one_value_args
+    NAME
     DESTINATION
     )
   set(multi_value_args
@@ -22,6 +23,10 @@ function(tl_add_gitignore)
 
   # -----------------------------------------------------------------------------
   # Error Checking
+
+  if(NOT PARSED_ARGS_NAME)
+    set(PARSED_ARGS_NAME ".ctagsignore")
+  endif()
 
   if(NOT PARSED_ARGS_DESTINATION)
     set(PARSED_ARGS_DESTINATION ${CMAKE_SOURCE_DIR})
@@ -35,7 +40,7 @@ function(tl_add_gitignore)
 
   # -----------------------------------------------------------------------------
 
-  set(FILE_NAME ".gitignore")
+  set(FILE_NAME ${PARSED_ARGS_NAME})
   set(FILE_DEST "${PARSED_ARGS_DESTINATION}/${FILE_NAME}")
 
   # -----------------------------------------------------------------------------
@@ -50,18 +55,8 @@ function(tl_add_gitignore)
   if(NOT PARSED_ARGS_NO_DEFAULTS)
     set(DEFAULT_IGNORE_LIST
       "\
-build*/
-install/
-*.swp
-*kdev*
-*compile_commands.json*
-.ycm_extra_conf.py
-tags
-.undo*
-Session.vim
-.vim-bookmarks
-*user.cmake
-*setup*.sh
+build*
+install*
 "
   )
   endif()

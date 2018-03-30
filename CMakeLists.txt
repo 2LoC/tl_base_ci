@@ -21,6 +21,7 @@ project(tl_base_ci)
 # -----------------------------------------------------------------------------
 
 set(${LIB_NAME}_HEADERS
+  "${INCLUDE_DIR}/tl_add_ctagsignore.cmake"
   "${INCLUDE_DIR}/tl_add_executable.cmake"
   "${INCLUDE_DIR}/tl_add_gitignore.cmake"
   "${INCLUDE_DIR}/tl_add_interface.cmake"
