@@ -63,7 +63,7 @@ if(NOT tl_base_ci_FOUND OR TLOC_ALWAYS_FETCHCONTENT)
   )
 
   FetchContent_GetProperties(tl_base_ci_ext)
-  if(NOT tl_base_ci_POPULATED)
+  if(NOT tl_base_ci_ext_POPULATED)
     FetchContent_Populate(tl_base_ci_ext)
     add_subdirectory(${tl_base_ci_ext_SOURCE_DIR} ${tl_base_ci_ext_BINARY_DIR})
     list(APPEND tl_base_ci_INCLUDE_DIRECTORIES "${tl_base_ci_ext_SOURCE_DIR}/include")
