@@ -40,8 +40,9 @@ set(${LIB_NAME}_HEADERS
   "${INCLUDE_DIR}/configure_file/tl_superbuild_cmakelists.cmake.in"
   "${INCLUDE_DIR}/configure_file/tl_ycm_extra_conf.py.in"
 
-  "${INCLUDE_DIR}/projects/tl_add_sdl.cmake"
   "${INCLUDE_DIR}/projects/tl_add_catch.cmake"
+  "${INCLUDE_DIR}/projects/tl_add_sdl.cmake"
+  "${INCLUDE_DIR}/projects/tl_add_tl_base.cmake"
   )
 
 # -----------------------------------------------------------------------------

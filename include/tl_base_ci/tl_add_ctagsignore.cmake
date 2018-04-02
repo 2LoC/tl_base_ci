@@ -89,4 +89,4 @@ ${PARSED_ARGS_IGNORE_LIST}
 
   # -----------------------------------------------------------------------------
 
-endfunction(tl_add_gitignore)
+endfunction()
