@@ -11,6 +11,7 @@ function(tl_add_superbuild)
 
   set(options "")
   set(one_value_args
+    PROJ_NAME
     DESTINATION
     )
   set(multi_value_args "")
@@ -20,8 +21,12 @@ function(tl_add_superbuild)
   # -----------------------------------------------------------------------------
   # Error Checking
 
+  if(NOT PARSED_ARGS_PROJ_NAME)
+    TLOC_LOG(FATAL_ERROR "PROJ_NAME must be provided.")
+  endif()
+
   if(NOT PARSED_ARGS_DESTINATION)
-    TLOC_LOG(FATAL_ERROR "Destination is required for superbuild.")
+    TLOC_LOG(FATAL_ERROR "DESTINATION is required for superbuild.")
   endif()
 
   TLOC_SANITIZE_AND_CHECK_DIRECTORY(${PARSED_ARGS_DESTINATION} PARSED_ARGS_DESTINATION)
