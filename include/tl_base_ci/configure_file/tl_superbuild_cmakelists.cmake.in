@@ -38,9 +38,7 @@ endfunction()
 
 # -----------------------------------------------------------------------------
 
-if(EXISTS "CMakeLists_Pre.cmake")
-  include("CMakeLists_Pre.cmake")
-endif()
+include("CMakeLists_Pre.cmake" OPTIONAL)
 
 # -----------------------------------------------------------------------------
 
@@ -94,9 +92,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ${TLOC_CMAKE_CXX_STANDARD_REQUIRED})
 
 # -----------------------------------------------------------------------------
 
-if(EXISTS "CMakeLists_Post.cmake")
-  include("CMakeLists_Post.cmake")
-endif()
+include("CMakeLists_Post.cmake" OPTIONAL)
 
 # -----------------------------------------------------------------------------
 
