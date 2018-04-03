@@ -36,16 +36,25 @@ function(tl_add_executable)
     TLOC_LOG(FATAL_ERROR "You must provide SOURCE_FILES")
   endif()
 
+  if(PARSED_ARGS_UNPARSED_ARGS)
+    TLOC_LOG(FATAL_ERROR "Unknown argument(s): ${PARSED_ARGS_UNPARSED_ARGS}")
+  endif()
+
+  # -----------------------------------------------------------------------------
+
+  add_executable(${PARSED_ARGS_EXE_NAME}
+    ${PARSED_ARGS_HEADER_FILES}
+    ${PARSED_ARGS_SOURCE_FILES}
+    )
+
+  # -----------------------------------------------------------------------------
+
   if(NOT PARSED_ARGS_BUILD_INTERFACE)
-    set(PARSED_ARGS_BUILD_INTERFACE ${CMAKE_SOURCE_DIR})
+    set(PARSED_ARGS_BUILD_INTERFACE ${${PARSED_ARGS_EXE_NAME}_SOURCE_DIR})
   endif()
 
   if(NOT PARSED_ARGS_INSTALL_INTERFACE)
     set(PARSED_ARGS_INSTALL_INTERFACE "install/")
-  endif()
-
-  if(PARSED_ARGS_UNPARSED_ARGS)
-    TLOC_LOG(FATAL_ERROR "Unknown argument(s): ${PARSED_ARGS_UNPARSED_ARGS}")
   endif()
 
   # -----------------------------------------------------------------------------
@@ -72,11 +81,6 @@ function(tl_add_executable)
   endforeach()
 
   # -----------------------------------------------------------------------------
-
-  add_executable(${PARSED_ARGS_EXE_NAME}
-    ${PARSED_ARGS_HEADER_FILES}
-    ${PARSED_ARGS_SOURCE_FILES}
-    )
 
   target_include_directories(${PARSED_ARGS_EXE_NAME}
     PUBLIC

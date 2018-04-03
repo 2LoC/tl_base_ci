@@ -36,16 +36,22 @@ function(tl_add_interface)
       )
   endif()
 
+  if(PARSED_ARGS_UNPARSED_ARGS)
+    TLOC_LOG(FATAL_ERROR "Unknown argument(s): ${PARSED_ARGS_UNPARSED_ARGS}")
+  endif()
+
+  # -----------------------------------------------------------------------------
+
+  add_library(${PARSED_ARGS_LIB_NAME} INTERFACE)
+
+  # -----------------------------------------------------------------------------
+
   if(NOT PARSED_ARGS_BUILD_INTERFACE)
-    set(PARSED_ARGS_BUILD_INTERFACE ${CMAKE_SOURCE_DIR})
+    set(PARSED_ARGS_BUILD_INTERFACE ${${PARSED_ARGS_LIB_NAME}_SOURCE_DIR})
   endif()
 
   if(NOT PARSED_ARGS_INSTALL_INTERFACE)
     set(PARSED_ARGS_INSTALL_INTERFACE "install/")
-  endif()
-
-  if(PARSED_ARGS_UNPARSED_ARGS)
-    TLOC_LOG(FATAL_ERROR "Unknown argument(s): ${PARSED_ARGS_UNPARSED_ARGS}")
   endif()
 
   # -----------------------------------------------------------------------------
@@ -60,8 +66,6 @@ function(tl_add_interface)
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Install Interface: ${PARSED_ARGS_INSTALL_INTERFACE}")
 
   # -----------------------------------------------------------------------------
-
-  add_library(${PARSED_ARGS_LIB_NAME} INTERFACE)
 
   target_include_directories(${PARSED_ARGS_LIB_NAME}
     INTERFACE

@@ -41,16 +41,26 @@ function(tl_add_library)
     TLOC_LOG(FATAL_ERROR "You must provide SOURCE_FILES (or use tl_add_interface)")
   endif()
 
+  if(PARSED_ARGS_UNPARSED_ARGS)
+    TLOC_LOG(FATAL_ERROR "Unknown argument(s): ${PARSED_ARGS_UNPARSED_ARGS}")
+  endif()
+
+  # -----------------------------------------------------------------------------
+
+  add_library(${PARSED_ARGS_LIB_NAME}
+    ${PARSED_ARGS_PUBLIC_HEADER_FILES}
+    ${PARSED_ARGS_PRIVATE_HEADER_FILES}
+    ${PARSED_ARGS_SOURCE_FILES}
+    )
+
+  # -----------------------------------------------------------------------------
+
   if(NOT PARSED_ARGS_BUILD_INTERFACE)
-    set(PARSED_ARGS_BUILD_INTERFACE ${CMAKE_SOURCE_DIR})
+    set(PARSED_ARGS_BUILD_INTERFACE ${${PARSED_ARGS_LIB_NAME}_SOURCE_DIR}/include/)
   endif()
 
   if(NOT PARSED_ARGS_INSTALL_INTERFACE)
     set(PARSED_ARGS_INSTALL_INTERFACE "install/")
-  endif()
-
-  if(PARSED_ARGS_UNPARSED_ARGS)
-    TLOC_LOG(FATAL_ERROR "Unknown argument(s): ${PARSED_ARGS_UNPARSED_ARGS}")
   endif()
 
   # -----------------------------------------------------------------------------
@@ -69,12 +79,6 @@ function(tl_add_library)
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Install Interface: ${PARSED_ARGS_INSTALL_INTERFACE}")
 
   # -----------------------------------------------------------------------------
-
-  add_library(${PARSED_ARGS_LIB_NAME}
-    ${PARSED_ARGS_PUBLIC_HEADER_FILES}
-    ${PARSED_ARGS_PRIVATE_HEADER_FILES}
-    ${PARSED_ARGS_SOURCE_FILES}
-    )
 
   set_target_properties(${PARSED_ARGS_LIB_NAME}
     PROPERTIES PUBLIC_HEADER "${PARSED_ARGS_PUBLIC_HEADER_FILES}"
