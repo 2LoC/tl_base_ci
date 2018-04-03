@@ -38,8 +38,8 @@ endfunction()
 
 # -----------------------------------------------------------------------------
 
-if(EXISTS "@PARSED_ARGS_DESTINATION@/CMakeLists_Pre.cmake")
-  include("@PARSED_ARGS_DESTINATION@/CMakeLists_Pre.cmake")
+if(EXISTS "CMakeLists_Pre.cmake")
+  include("CMakeLists_Pre.cmake")
 endif()
 
 # -----------------------------------------------------------------------------
@@ -94,8 +94,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ${TLOC_CMAKE_CXX_STANDARD_REQUIRED})
 
 # -----------------------------------------------------------------------------
 
-if(EXISTS "@PARSED_ARGS_DESTINATION@/CMakeLists_Post.cmake")
-  include("@PARSED_ARGS_DESTINATION@/CMakeLists_Post.cmake")
+if(EXISTS "CMakeLists_Post.cmake")
+  include("CMakeLists_Post.cmake")
 endif()
 
 # -----------------------------------------------------------------------------
