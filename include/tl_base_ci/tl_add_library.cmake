@@ -16,7 +16,8 @@ function(tl_add_library)
     PUBLIC_HEADER_FILES
     PRIVATE_HEADER_FILES
     SOURCE_FILES
-    INCLUDE_DIRS
+    PUBLIC_INCLUDE_DIRS
+    PRIVATE_INCLUDE_DIRS
     PUBLIC_LINK_LIBS
     PRIVATE_LINK_LIBS
     PUBLIC_FIND_PACKAGES
@@ -74,9 +75,22 @@ function(tl_add_library)
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Private Libs     : ${PARSED_ARGS_PRIVATE_LINK_LIBS}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Public Packages  : ${PARSED_ARGS_PUBLIC_FIND_PACKAGES}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Private Packages : ${PARSED_ARGS_PRIVATE_FIND_PACKAGES}")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Include Dirs     : ${PARSED_ARGS_INCLUDE_DIRS}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Public Incl Dirs : ${PARSED_ARGS_PUBLIC_INCLUDE_DIRS}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Private Incl Dirs: ${PARSED_ARGS_PRIVATE_INCLUDE_DIRS}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Build Interface  : ${PARSED_ARGS_BUILD_INTERFACE}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Install Interface: ${PARSED_ARGS_INSTALL_INTERFACE}")
+
+  # -----------------------------------------------------------------------------
+
+  foreach(PACKAGE ${PARSED_ARGS_PUBLIC_FIND_PACKAGES})
+    find_package(${PACKAGE} QUIET)
+    list(APPEND PARSED_ARGS_PUBLIC_LINK_LIBS ${PACKAGE})
+  endforeach()
+
+  foreach(PACKAGE ${PARSED_ARGS_PRIVATE_FIND_PACKAGES})
+    find_package(${PACKAGE} QUIET)
+    list(APPEND PARSED_ARGS_PRIVATE_LINK_LIBS ${PACKAGE})
+  endforeach()
 
   # -----------------------------------------------------------------------------
 
@@ -88,7 +102,9 @@ function(tl_add_library)
     PUBLIC
       $<BUILD_INTERFACE:${PARSED_ARGS_BUILD_INTERFACE}>
       $<INSTALL_INTERFACE:${PARSED_ARGS_INSTALL_INTERFACE}>
-      ${PARSED_ARGS_INCLUDE_DIRS}
+      ${PARSED_ARGS_PUBLIC_INCLUDE_DIRS}
+    PRIVATE
+      ${PARSED_ARGS_PRIVATE_INCLUDE_DIRS}
     )
 
   target_link_libraries(${PARSED_ARGS_LIB_NAME}
@@ -97,20 +113,6 @@ function(tl_add_library)
     PRIVATE
       ${PARSED_ARGS_PRIVATE_LINK_LIBS}
     )
-
-  foreach(PACKAGE ${PARSED_ARGS_PUBLIC_FIND_PACKAGES})
-    target_link_libraries(${PARSED_ARGS_LIB_NAME}
-      PUBLIC
-      ${PACKAGE}
-      )
-  endforeach()
-
-  foreach(PACKAGE ${PARSED_ARGS_PRIVATE_FIND_PACKAGES})
-    target_link_libraries(${PARSED_ARGS_LIB_NAME}
-      PRIVATE
-      ${PACKAGE}
-      )
-  endforeach()
 
   install(TARGETS ${PARSED_ARGS_LIB_NAME}
     EXPORT ${PARSED_ARGS_LIB_NAME}Config

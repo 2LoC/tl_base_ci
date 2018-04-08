@@ -67,6 +67,12 @@ function(tl_add_interface)
 
   # -----------------------------------------------------------------------------
 
+  foreach(PACKAGE ${PARSED_FIND_PACKAGES})
+    find_package(${PACKAGE} REQUIRED)
+  endforeach()
+
+  # -----------------------------------------------------------------------------
+
   target_include_directories(${PARSED_ARGS_LIB_NAME}
     INTERFACE
       $<BUILD_INTERFACE:${PARSED_ARGS_BUILD_INTERFACE}>
