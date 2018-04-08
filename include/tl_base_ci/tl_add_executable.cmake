@@ -104,14 +104,14 @@ function(tl_add_executable)
     )
 
   if (PARSED_ARGS_CXX_STANDARD)
-    set_target_properties(${PARSED_ARGS_LIB_NAME}
+    set_target_properties(${PARSED_ARGS_EXE_NAME}
       PROPERTIES
       CXX_STANDARD ${PARSED_ARGS_CXX_STANDARD}
     )
   endif()
 
   if (PARSED_ARGS_CXX_STANDARD_REQUIRED)
-    set_target_properties(${PARSED_ARGS_LIB_NAME}
+    set_target_properties(${PARSED_ARGS_EXE_NAME}
       PROPERTIES
       CXX_STANDARD_REQUIRED ${PARSED_ARGS_CXX_STANDARD_REQUIRED}
     )
