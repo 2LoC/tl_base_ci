@@ -11,14 +11,21 @@ function(tl_add_executable)
   set(options "")
   set(one_value_args
     EXE_NAME
+
+    CXX_STANDARD
+    CXX_STANDARD_REQUIRED
     )
   set(multi_value_args
+
     HEADER_FILES
     SOURCE_FILES
+
     INCLUDE_DIRS
     LINK_LIBS
+
     PUBLIC_FIND_PACKAGES
     PRIVATE_FIND_PACKAGES
+
     BUILD_INTERFACE
     INSTALL_INTERFACE
     )
@@ -69,6 +76,8 @@ function(tl_add_executable)
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Include Dirs     : ${PARSED_ARGS_INCLUDE_DIRS}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Build Interface  : ${PARSED_ARGS_BUILD_INTERFACE}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Install Interface: ${PARSED_ARGS_INSTALL_INTERFACE}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} CXX Standard     : ${PARSED_ARGS_CXX_STANDARD}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} CXX Standard Req : ${PARSED_ARGS_CXX_STANDARD_REQUIRED}")
 
   # -----------------------------------------------------------------------------
 
@@ -93,6 +102,20 @@ function(tl_add_executable)
     PUBLIC
     ${PARSED_ARGS_LINK_LIBS}
     )
+
+  if (PARSED_ARGS_CXX_STANDARD)
+    set_target_properties(${PARSED_ARGS_LIB_NAME}
+      PROPERTIES
+      CXX_STANDARD ${PARSED_ARGS_CXX_STANDARD}
+    )
+  endif()
+
+  if (PARSED_ARGS_CXX_STANDARD_REQUIRED)
+    set_target_properties(${PARSED_ARGS_LIB_NAME}
+      PROPERTIES
+      CXX_STANDARD_REQUIRED ${PARSED_ARGS_CXX_STANDARD_REQUIRED}
+    )
+  endif()
 
   foreach(PACKAGE ${PARSED_ARGS_PUBLIC_FIND_PACKAGES})
     target_link_libraries(${PARSED_ARGS_EXE_NAME}

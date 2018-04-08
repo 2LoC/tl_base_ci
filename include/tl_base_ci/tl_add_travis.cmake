@@ -148,9 +148,8 @@ matrix:
 
 foreach(COMPILER IN LISTS PARSED_ARGS_LINUX_COMPILERS)
 
-  if (CMAKE_CXX_STANDARD GREATER 11)
-    set(ADD_LIB_STD "- libstdc++-6-dev")
-  endif()
+  # all projects use CXX11 or higher
+  set(ADD_LIB_STD "- libstdc++-6-dev")
 
   if(NOT LINUX_COMPILERS_${COMPILER})
     TLOC_LOG(WARNING "Unsupported compiler requested: ${COMPILER}")

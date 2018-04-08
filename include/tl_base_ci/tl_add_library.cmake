@@ -11,17 +11,26 @@ function(tl_add_library)
   set(options "")
   set(one_value_args
     LIB_NAME
+
+    CXX_STANDARD
+    CXX_STANDARD_REQUIRED
     )
   set(multi_value_args
+
     PUBLIC_HEADER_FILES
     PRIVATE_HEADER_FILES
+
     SOURCE_FILES
+
     PUBLIC_INCLUDE_DIRS
     PRIVATE_INCLUDE_DIRS
+
     PUBLIC_LINK_LIBS
     PRIVATE_LINK_LIBS
+
     PUBLIC_FIND_PACKAGES
     PRIVATE_FIND_PACKAGES
+
     BUILD_INTERFACE
     INSTALL_INTERFACE
     )
@@ -79,6 +88,8 @@ function(tl_add_library)
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Private Incl Dirs: ${PARSED_ARGS_PRIVATE_INCLUDE_DIRS}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Build Interface  : ${PARSED_ARGS_BUILD_INTERFACE}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Install Interface: ${PARSED_ARGS_INSTALL_INTERFACE}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} CXX Standard     : ${PARSED_ARGS_CXX_STANDARD}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} CXX Standard Req : ${PARSED_ARGS_CXX_STANDARD_REQUIRED}")
 
   # -----------------------------------------------------------------------------
 
@@ -113,6 +124,20 @@ function(tl_add_library)
     PRIVATE
       ${PARSED_ARGS_PRIVATE_LINK_LIBS}
     )
+
+  if (PARSED_ARGS_CXX_STANDARD)
+    set_target_properties(${PARSED_ARGS_LIB_NAME}
+      PROPERTIES
+      CXX_STANDARD ${PARSED_ARGS_CXX_STANDARD}
+    )
+  endif()
+
+  if (PARSED_ARGS_CXX_STANDARD_REQUIRED)
+    set_target_properties(${PARSED_ARGS_LIB_NAME}
+      PROPERTIES
+      CXX_STANDARD_REQUIRED ${PARSED_ARGS_CXX_STANDARD_REQUIRED}
+    )
+  endif()
 
   install(TARGETS ${PARSED_ARGS_LIB_NAME}
     EXPORT ${PARSED_ARGS_LIB_NAME}Config

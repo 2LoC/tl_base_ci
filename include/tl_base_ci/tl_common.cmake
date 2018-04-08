@@ -16,14 +16,6 @@ set(TLOC_INSTALL_PREFIX
   )
 set(CMAKE_INSTALL_PREFIX ${TLOC_INSTALL_PREFIX})
 
-set(TLOC_CMAKE_CXX_STANDARD
-  "14" CACHE STRING "C++ version to build"
-  )
-
-option(TLOC_CMAKE_CXX_STANDARD_REQUIRED
-  "May not work for all platforms" ON
-  )
-
 option(TLOC_DISABLE_TESTS
   "Disable tests for all projects (excluding dependencies)" OFF
   )
@@ -57,11 +49,6 @@ set(TLOC_CXX_COMPILER_PATH
 # debug builds
 
 set(CMAKE_DEBUG_POSTFIX _d)
-
-# -----------------------------------------------------------------------------
-# C++11
-
-set(CMAKE_CXX_STANDARD 11)
 
 # -----------------------------------------------------------------------------
 # logging
@@ -147,8 +134,6 @@ function(TLOC_LOG_COMMON_VARIABLES)
   TLOC_LOG_LINE(STATUS)
   TLOC_LOG_DETAIL(STATUS "tl_common.cmake variables...")
   TLOC_LOG_DETAIL_VAR(STATUS TLOC_INSTALL_PREFIX)
-  TLOC_LOG_DETAIL_VAR(STATUS TLOC_CMAKE_CXX_STANDARD)
-  TLOC_LOG_DETAIL_VAR(STATUS TLOC_CMAKE_CXX_STANDARD_REQUIRED)
   TLOC_LOG_DETAIL_VAR(STATUS TLOC_DISABLE_TESTS)
   TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_DISABLE_TESTS)
   TLOC_LOG_DETAIL_VAR(STATUS TLOC_EXPORT_COMPILE_COMMANDS)

@@ -21,7 +21,7 @@ matrix:
           sources: *all_sources
           packages:
             - clang-3.8
-            
+            - libstdc++-6-dev
       env: COMPILER='clang++-3.8'
 
 
@@ -32,7 +32,7 @@ matrix:
           sources: *all_sources
           packages:
             - clang-4.0
-            
+            - libstdc++-6-dev
       env: COMPILER='clang++-4.0'
 
 
@@ -43,7 +43,7 @@ matrix:
           sources: *all_sources
           packages:
             - clang-5.0
-            
+            - libstdc++-6-dev
       env: COMPILER='clang++-5.0'
 
 before_install:
