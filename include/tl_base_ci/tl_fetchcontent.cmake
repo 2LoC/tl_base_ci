@@ -19,7 +19,6 @@ function(tl_fetchcontent)
     INSTALL_PREFIX
     GIT_REPOSITORY
     GIT_TAG
-    CL_ARGS
     )
   set(multi_value_args "")
 
@@ -59,7 +58,6 @@ function(tl_fetchcontent)
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_PROJ_NAME} Git Repository: ${PARSED_ARGS_GIT_REPOSITORY}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_PROJ_NAME} Git Tag       : ${PARSED_ARGS_GIT_TAG}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_PROJ_NAME} Test Command  : ${PARSED_ARGS_TEST_COMMAND}")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_PROJ_NAME} CL Args       : ${PARSED_ARGS_CL_ARGS}")
 
   # -----------------------------------------------------------------------------
 
@@ -77,8 +75,6 @@ function(tl_fetchcontent)
     FetchContent_Declare(${PARSED_ARGS_PROJ_NAME}
       GIT_REPOSITORY ${PARSED_ARGS_GIT_REPOSITORY}
       GIT_TAG ${PARSED_ARGS_GIT_TAG}
-
-      CMAKE_ARGS ${PARSED_ARGS_CL_ARGS}
     )
 
     FetchContent_GetProperties(${PARSED_ARGS_PROJ_NAME})

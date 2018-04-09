@@ -28,8 +28,7 @@ function(tl_add_library)
     PUBLIC_LINK_LIBS
     PRIVATE_LINK_LIBS
 
-    PUBLIC_FIND_PACKAGES
-    PRIVATE_FIND_PACKAGES
+    FIND_PACKAGES
 
     BUILD_INTERFACE
     INSTALL_INTERFACE
@@ -82,8 +81,7 @@ function(tl_add_library)
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Source Files     : ${PARSED_ARGS_SOURCE_FILES}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Public Libs      : ${PARSED_ARGS_PUBLIC_LINK_LIBS}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Private Libs     : ${PARSED_ARGS_PRIVATE_LINK_LIBS}")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Public Packages  : ${PARSED_ARGS_PUBLIC_FIND_PACKAGES}")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Private Packages : ${PARSED_ARGS_PRIVATE_FIND_PACKAGES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Find Packages    : ${PARSED_ARGS_FIND_PACKAGES}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Public Incl Dirs : ${PARSED_ARGS_PUBLIC_INCLUDE_DIRS}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Private Incl Dirs: ${PARSED_ARGS_PRIVATE_INCLUDE_DIRS}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Build Interface  : ${PARSED_ARGS_BUILD_INTERFACE}")
@@ -93,14 +91,8 @@ function(tl_add_library)
 
   # -----------------------------------------------------------------------------
 
-  foreach(PACKAGE ${PARSED_ARGS_PUBLIC_FIND_PACKAGES})
+  foreach(PACKAGE ${PARSED_ARGS_FIND_PACKAGES})
     find_package(${PACKAGE} QUIET)
-    list(APPEND PARSED_ARGS_PUBLIC_LINK_LIBS ${PACKAGE})
-  endforeach()
-
-  foreach(PACKAGE ${PARSED_ARGS_PRIVATE_FIND_PACKAGES})
-    find_package(${PACKAGE} QUIET)
-    list(APPEND PARSED_ARGS_PRIVATE_LINK_LIBS ${PACKAGE})
   endforeach()
 
   # -----------------------------------------------------------------------------

@@ -23,8 +23,7 @@ function(tl_add_executable)
     INCLUDE_DIRS
     LINK_LIBS
 
-    PUBLIC_FIND_PACKAGES
-    PRIVATE_FIND_PACKAGES
+    FIND_PACKAGES
 
     BUILD_INTERFACE
     INSTALL_INTERFACE
@@ -68,11 +67,10 @@ function(tl_add_executable)
 
   TLOC_LOG_LINE  (STATUS)
   TLOC_LOG       (STATUS "Adding ${PARSED_ARGS_EXE_NAME} executable")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Headers         : ${PARSED_ARGS_HEADER_FILES}")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Source Files    : ${PARSED_ARGS_SOURCE_FILES}")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Link libraries  : ${PARSED_ARGS_LINK_LIBS}")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Public Packages : ${PARSED_ARGS_PUBLIC_FIND_PACKAGES}")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Private Packages: ${PARSED_ARGS_PRIVATE_FIND_PACKAGES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Headers          : ${PARSED_ARGS_HEADER_FILES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Source Files     : ${PARSED_ARGS_SOURCE_FILES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Link libraries   : ${PARSED_ARGS_LINK_LIBS}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Find Packages    : ${PARSED_ARGS_FIND_PACKAGES}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Include Dirs     : ${PARSED_ARGS_INCLUDE_DIRS}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Build Interface  : ${PARSED_ARGS_BUILD_INTERFACE}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Install Interface: ${PARSED_ARGS_INSTALL_INTERFACE}")
@@ -81,26 +79,22 @@ function(tl_add_executable)
 
   # -----------------------------------------------------------------------------
 
-  foreach(PACKAGE ${PARSED_ARGS_PUBLIC_FIND_PACKAGES})
-    find_package(${PACKAGE} REQUIRED)
-  endforeach()
-
-  foreach(PACKAGE ${PARSED_ARGS_PRIVATE_FIND_PACKAGES})
+  foreach(PACKAGE ${PARSED_ARGS_FIND_PACKAGES})
     find_package(${PACKAGE} REQUIRED)
   endforeach()
 
   # -----------------------------------------------------------------------------
 
   target_include_directories(${PARSED_ARGS_EXE_NAME}
-    PUBLIC
-    $<BUILD_INTERFACE:${PARSED_ARGS_BUILD_INTERFACE}>
-    $<INSTALL_INTERFACE:${PARSED_ARGS_INSTALL_INTERFACE}>
-    ${PARSED_ARGS_INCLUDE_DIRS}
+    PRIVATE
+      $<BUILD_INTERFACE:${PARSED_ARGS_BUILD_INTERFACE}>
+      $<INSTALL_INTERFACE:${PARSED_ARGS_INSTALL_INTERFACE}>
+      ${PARSED_ARGS_INCLUDE_DIRS}
     )
 
   target_link_libraries(${PARSED_ARGS_EXE_NAME}
-    PUBLIC
-    ${PARSED_ARGS_LINK_LIBS}
+    PRIVATE
+      ${PARSED_ARGS_LINK_LIBS}
     )
 
   if (PARSED_ARGS_CXX_STANDARD)
@@ -116,20 +110,6 @@ function(tl_add_executable)
       CXX_STANDARD_REQUIRED ${PARSED_ARGS_CXX_STANDARD_REQUIRED}
     )
   endif()
-
-  foreach(PACKAGE ${PARSED_ARGS_PUBLIC_FIND_PACKAGES})
-    target_link_libraries(${PARSED_ARGS_EXE_NAME}
-      PUBLIC
-      ${PACKAGE}
-      )
-  endforeach()
-
-  foreach(PACKAGE ${PARSED_ARGS_PRIVATE_FIND_PACKAGES})
-    target_link_libraries(${PARSED_ARGS_EXE_NAME}
-      PRIVATE
-      ${PACKAGE}
-      )
-  endforeach()
 
   install(TARGETS ${PARSED_ARGS_EXE_NAME}
     EXPORT ${PARSED_ARGS_EXE_NAME}Config

@@ -65,7 +65,7 @@ function(tl_add_interface)
   TLOC_LOG       (STATUS "Adding ${PARSED_ARGS_LIB_NAME} interface library")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Headers          : ${PARSED_ARGS_HEADER_FILES}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Link Libraries   : ${PARSED_ARGS_LINK_LIBS}")
-  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Packages         : ${PARSED_ARGS_FIND_PACKAGES}")
+  TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Find Packages    : ${PARSED_ARGS_FIND_PACKAGES}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Include Dirs     : ${PARSED_ARGS_INCLUDE_LIBS}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Build Interface  : ${PARSED_ARGS_BUILD_INTERFACE}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Install Interface: ${PARSED_ARGS_INSTALL_INTERFACE}")
@@ -76,7 +76,6 @@ function(tl_add_interface)
 
   foreach(PACKAGE ${PARSED_ARGS_FIND_PACKAGES})
     find_package(${PACKAGE} QUIET)
-    list(APPEND PARSED_ARGS_LINK_LIBS ${PACKAGE})
   endforeach()
 
   # -----------------------------------------------------------------------------
