@@ -80,7 +80,7 @@ function(tl_add_executable)
   # -----------------------------------------------------------------------------
 
   foreach(PACKAGE ${PARSED_ARGS_FIND_PACKAGES})
-    find_package(${PACKAGE} REQUIRED)
+    find_package(${PACKAGE} QUIET)
   endforeach()
 
   # -----------------------------------------------------------------------------
