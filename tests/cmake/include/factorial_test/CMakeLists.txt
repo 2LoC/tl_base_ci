@@ -16,8 +16,8 @@ tl_add_ycm_config()
 tl_add_executable(
   EXE_NAME ${EXE_NAME}
   SOURCE_FILES "main.cpp"
-  LINK_LIBS "Catch"
-  PUBLIC_FIND_PACKAGES "factorial"
+  FIND_PACKAGES "factorial"
+  LINK_LIBS "Catch;factorial"
   )
 
 enable_testing()
