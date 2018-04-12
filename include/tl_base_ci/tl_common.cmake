@@ -182,3 +182,15 @@ function(TLOC_INCLUDE FILE PATHS)
   endforeach()
   TLOC_LOG(FATAL_ERROR "Could not find file ${FILE} to include in paths ${PATHS}")
 endfunction()
+
+# -----------------------------------------------------------------------------
+# force one configuration builds
+# notes: this is to ensure that we can query which configuration we are building
+# and then match the FetchContent packages properly
+
+if(NOT CMAKE_BUILD_TYPE)
+  TLOC_LOG(FATAL_ERROR "CMAKE_BUILD_TYPE must be specified (Debug, Release, RelWithDebInfo, MinSizeRel")
+endif()
+
+# only support one build configuration per build-tree
+set(CMAKE_CONFIGURATION_TYPES ${CMAKE_BUILD_TYPE} FORCE)
