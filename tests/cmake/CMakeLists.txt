@@ -4,6 +4,7 @@ project(tl_base_ci_tests)
 
 include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/projects/tl_add_catch.cmake")
 include("${CMAKE_SOURCE_DIR}/../../include/tl_base_ci/tl_add_ycm_config.cmake")
+TLOC_LOG_COMMON_VARIABLES()
 
 tl_add_catch()
 tl_add_ycm_config(DESTINATION ${CMAKE_SOURCE_DIR})

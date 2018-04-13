@@ -1,6 +1,9 @@
 # -----------------------------------------------------------------------------
 
 include(${CMAKE_CURRENT_LIST_DIR}/tl_common.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/tl_logging.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/tl_paths.cmake)
+
 set(CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR} CACHE INTERNAL "" FORCE)
 
 # -----------------------------------------------------------------------------

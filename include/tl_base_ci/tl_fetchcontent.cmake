@@ -1,6 +1,7 @@
 # -----------------------------------------------------------------------------
 
 include(${CMAKE_CURRENT_LIST_DIR}/tl_common.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/tl_logging.cmake)
 
 # -----------------------------------------------------------------------------
 
@@ -63,6 +64,12 @@ function(tl_fetchcontent)
 
   if (NOT TLOC_ALWAYS_FETCHCONTENT)
     find_package(${PARSED_ARGS_PACKAGE_NAME} QUIET)
+  endif()
+
+  # if package is found, but configuration is different, we need FetchContent
+  # again
+  if (${PARSED_ARGS_PACKAGE_NAME}_FOUND)
+    unset(${PARSED_ARGS_PACKAGE_NAME}_FOUND)
   endif()
 
   if(NOT ${PARSED_ARGS_PACKAGE_NAME}_FOUND OR TLOC_ALWAYS_FETCHCONTENT)

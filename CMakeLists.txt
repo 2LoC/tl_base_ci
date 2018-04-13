@@ -35,6 +35,10 @@ set(${LIB_NAME}_HEADERS
   "${INCLUDE_DIR}/tl_common.cmake"
   "${INCLUDE_DIR}/tl_external_project.cmake"
   "${INCLUDE_DIR}/tl_fetchcontent.cmake"
+  "${INCLUDE_DIR}/tl_include_helper.cmake"
+  "${INCLUDE_DIR}/tl_logging.cmake"
+  "${INCLUDE_DIR}/tl_map.cmake"
+  "${INCLUDE_DIR}/tl_paths.cmake"
 
   "${INCLUDE_DIR}/configure_file/tl_setup_vars.cmake.in"
   "${INCLUDE_DIR}/configure_file/tl_superbuild_cmakelists.cmake.in"
@@ -61,14 +65,14 @@ set(TRAVIS_SCRIPT
   - cd tests/cmake/
   - mkdir build
   - cd build
-  - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DTLOC_INSTALL_PREFIX=../install -DTLOC_DETAILED_LOGS=ON ../
+  - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DTLOC_BUILD_TYPE=Debug -DTLOC_INSTALL_PREFIX=../install -DTLOC_DETAILED_LOGS=ON ../
   - make install
   - ctest
   - cd ..
   - cd include/factorial_test/
   - mkdir build
   - cd build
-  - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DTLOC_INSTALL_PREFIX=../install -DTLOC_DETAILED_LOGS=ON ../
+  - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DTLOC_BUILD_TYPE=Release -DTLOC_INSTALL_PREFIX=../install -DTLOC_DETAILED_LOGS=ON ../
   - make install
   - ctest
 "

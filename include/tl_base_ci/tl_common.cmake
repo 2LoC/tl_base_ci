@@ -2,6 +2,8 @@
 
 include_guard()
 
+include(${CMAKE_CURRENT_LIST_DIR}/tl_logging.cmake)
+
 # -----------------------------------------------------------------------------
 # common options and variables
 
@@ -51,81 +53,22 @@ set(TLOC_CXX_COMPILER_PATH
 set(CMAKE_DEBUG_POSTFIX _d)
 
 # -----------------------------------------------------------------------------
-# logging
+# force one configuration builds
+# notes: this is to ensure that we can query which configuration we are building
+# and then match the FetchContent packages properly
 
-# MODE: same as CMake message(<mode>)
-function(TLOC_LOG MODE MSG)
-
-  # ---------------------------------------------------------------------------
-  # colors
-
-  if(NOT WIN32)
-    string(ASCII 27 Esc)
-    set(ColourReset "${Esc}[m")
-    set(ColourBold  "${Esc}[1m")
-    set(Red         "${Esc}[31m")
-    set(Green       "${Esc}[32m")
-    set(Yellow      "${Esc}[33m")
-    set(Blue        "${Esc}[34m")
-    set(Magenta     "${Esc}[35m")
-    set(Cyan        "${Esc}[36m")
-    set(White       "${Esc}[37m")
-    set(BoldRed     "${Esc}[1;31m")
-    set(BoldGreen   "${Esc}[1;32m")
-    set(BoldYellow  "${Esc}[1;33m")
-    set(BoldBlue    "${Esc}[1;34m")
-    set(BoldMagenta "${Esc}[1;35m")
-    set(BoldCyan    "${Esc}[1;36m")
-    set(BoldWhite   "${Esc}[1;37m")
-  endif()
-
-
-  if(${MODE} STREQUAL "STATUS")
-    message(${MODE} "${BoldBlue}${MSG}${ColourReset}")
-  elseif(${MODE} STREQUAL "WARNING")
-    message(${MODE} "${BoldYellow}${MSG}${ColourReset}")
-  elseif(${MODE} STREQUAL "FATAL_ERROR" OR ${MODE} STREQUAL "SEND_ERROR")
-    if (TLOC_IGNORE_FATAL_ERROR)
-      set(MODE "WARNING")
-    endif()
-    message(${MODE} "${BoldRed}${MSG}${ColourReset}")
-  elseif(${MODE} STREQUAL "DEPRECATION")
-    message(${MODE} "${Yellow}${MSG}${ColourReset}")
+if(NOT CMAKE_BUILD_TYPE AND NOT TLOC_BUILD_TYPE)
+  TLOC_LOG(FATAL_ERROR "CMAKE_BUILD_TYPE must be specified (Debug, Release, RelWithDebInfo, MinSizeRel")
+else()
+  if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE ${TLOC_BUILD_TYPE})
   else()
-    message(${MODE} ${MSG})
+    set(TLOC_BUILD_TYPE ${CMAKE_BUILD_TYPE})
   endif()
-endfunction()
+endif()
 
-# Logs with TLOC_LOG_DETAIL will not appear by default
-# MODE: same as CMake message(<mode>)
-function(TLOC_LOG_DETAIL MODE MSG)
-  if (TLOC_DETAILED_LOGS)
-    TLOC_LOG(${MODE} "${MSG}")
-  endif()
-endfunction()
-
-function(TLOC_LOG_LINE MODE)
-  TLOC_LOG_DETAIL(${MODE} "----------------------------------------------------------")
-endfunction()
-
-function(TLOC_LOG_NEWLINE MODE)
-  TLOC_LOG_DETAIL(${MODE} " ")
-endfunction()
-
-function(TLOC_LOG_DETAIL_VAR MODE _VAR)
-  TLOC_LOG_DETAIL(${MODE} "${_VAR}: ${${_VAR}}")
-endfunction()
-
-function(TLOC_LOG_VAR MODE _VAR)
-  TLOC_LOG(${MODE} "${_VAR}: ${${_VAR}}")
-endfunction()
-
-# -----------------------------------------------------------------------------
-# emulating maps
-
-MACRO(INSERT_INTO_MAP _NAME _KEY _VALUE)
-  SET("${_NAME}_${_KEY}" "${_VALUE}")
-ENDMACRO(INSERT_INTO_MAP)
+# only support one build configuration per build-tree
+set(CMAKE_CONFIGURATION_TYPES ${CMAKE_BUILD_TYPE} FORCE)
 
 # -----------------------------------------------------------------------------
 # logging
@@ -141,24 +84,8 @@ function(TLOC_LOG_COMMON_VARIABLES)
   TLOC_LOG_DETAIL_VAR(STATUS TLOC_CXX_COMPILER_PATH)
   TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_SOURCE_DIR)
   TLOC_LOG_DETAIL_VAR(STATUS TLOC_DEP_DISABLE_TESTS)
+  TLOC_LOG_DETAIL_VAR(STATUS TLOC_BUILD_TYPE)
   TLOC_LOG_NEWLINE(STATUS)
-endfunction()
-
-# -----------------------------------------------------------------------------
-# error checking
-
-function(TLOC_SANITIZE_AND_CHECK_DIRECTORY PATH_IN PATH_OUT)
-  get_filename_component(PATH_IN ${PATH_IN} ABSOLUTE)
-
-  if(NOT IS_DIRECTORY ${PATH_IN})
-    TLOC_LOG(FATAL_ERROR "Path is not a directory: ${PATH_IN}")
-  endif()
-
-  if(NOT EXISTS ${PATH_IN})
-    TLOC_LOG(FATAL_ERROR "Path does not exist: ${PATH_IN}")
-  endif()
-
-  set(${PATH_OUT} ${PATH_IN} PARENT_SCOPE)
 endfunction()
 
 # -----------------------------------------------------------------------------
@@ -167,30 +94,3 @@ endfunction()
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
   TLOC_LOG(FATAL_ERROR "Please build in a directory that is not the source directory")
 endif()
-
-# -----------------------------------------------------------------------------
-# include helper
-
-function(TLOC_INCLUDE FILE PATHS)
-  foreach(PATH ${PATHS})
-    set(FULL_PATH ${PATH}${FILE})
-    if (EXISTS ${FULL_PATH})
-      TLOC_LOG_DETAIL(STATUS "Including file: ${FULL_PATH}")
-      include(${FULL_PATH})
-      return()
-    endif()
-  endforeach()
-  TLOC_LOG(FATAL_ERROR "Could not find file ${FILE} to include in paths ${PATHS}")
-endfunction()
-
-# -----------------------------------------------------------------------------
-# force one configuration builds
-# notes: this is to ensure that we can query which configuration we are building
-# and then match the FetchContent packages properly
-
-if(NOT CMAKE_BUILD_TYPE)
-  TLOC_LOG(FATAL_ERROR "CMAKE_BUILD_TYPE must be specified (Debug, Release, RelWithDebInfo, MinSizeRel")
-endif()
-
-# only support one build configuration per build-tree
-set(CMAKE_CONFIGURATION_TYPES ${CMAKE_BUILD_TYPE} FORCE)
