@@ -26,7 +26,7 @@ function(tl_add_gitignore)
   # Error Checking
 
   if(NOT PARSED_ARGS_DESTINATION)
-    set(PARSED_ARGS_DESTINATION ${CMAKE_SOURCE_DIR})
+    set(PARSED_ARGS_DESTINATION ${PROJECT_SOURCE_DIR})
   endif()
 
   TLOC_SANITIZE_AND_CHECK_DIRECTORY(${PARSED_ARGS_DESTINATION} PARSED_ARGS_DESTINATION)
@@ -42,7 +42,7 @@ function(tl_add_gitignore)
 
   # -----------------------------------------------------------------------------
 
-  TLOC_LOG_LINE  (STATUS)
+  TLOC_LOG_LINE  (DEBUG)
   TLOC_LOG       (STATUS "Writing ${FILE_NAME} to ${PARSED_ARGS_DESTINATION} ...")
   TLOC_LOG_DETAIL(STATUS "no defaults: ${PARSED_ARGS_NO_DEFAULTS}")
   TLOC_LOG_DETAIL(STATUS "ignore list: ${PARSED_ARGS_IGNORE_LIST}")

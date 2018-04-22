@@ -39,6 +39,8 @@ function(tl_add_fmt)
   tl_fetchcontent(
     PROJ_NAME fmt_ext
     PACKAGE_NAME fmt
+    TARGET_NAME fmt
+    NAMESPACE fmt::
     GIT_REPOSITORY "${PARSED_ARGS_GIT_REPOSITORY}"
     GIT_TAG ${PARSED_ARGS_GIT_TAG}
     QUIET OFF
@@ -46,7 +48,13 @@ function(tl_add_fmt)
 
   find_package(fmt QUIET)
   if (fmt_FOUND)
-    get_target_property(FMT_INCLUDE_DIRECTORIES fmt::fmt INTERFACE_INCLUDE_DIRECTORIES)
+    if(TARGET fmt::fmt)
+      get_target_property(FMT_INCLUDE_DIRECTORIES fmt::fmt INTERFACE_INCLUDE_DIRECTORIES)
+    elseif(TARGET fmt)
+      get_target_property(FMT_INCLUDE_DIRECTORIES fmt INTERFACE_INCLUDE_DIRECTORIES)
+    else()
+      TLOC_LOG(FATAL_ERROR "Could not find fmt or fmt::fmt target")
+    endif()
     set(FMT_INCLUDE_DIR "${FMT_INCLUDE_DIRECTORIES}")
   else()
     set(FMT_INCLUDE_DIR "${FMT_SOURCE_DIR}/include/")

@@ -71,12 +71,12 @@ function(tl_add_library)
   endif()
 
   if(NOT PARSED_ARGS_INSTALL_INTERFACE)
-    set(PARSED_ARGS_INSTALL_INTERFACE "install/")
+    set(PARSED_ARGS_INSTALL_INTERFACE "include/")
   endif()
 
   # -----------------------------------------------------------------------------
 
-  TLOC_LOG_LINE  (STATUS)
+  TLOC_LOG_LINE  (DEBUG)
   TLOC_LOG       (STATUS "Adding ${PARSED_ARGS_LIB_NAME} library")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Public Headers   : ${PARSED_ARGS_PUBLIC_HEADER_FILES}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_LIB_NAME} Private Headers  : ${PARSED_ARGS_PRIVATE_HEADER_FILES}")

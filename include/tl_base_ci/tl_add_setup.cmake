@@ -39,7 +39,7 @@ function(tl_add_setup)
   endif()
 
   if(NOT PARSED_ARGS_DESTINATION)
-    set(PARSED_ARGS_DESTINATION ${CMAKE_SOURCE_DIR})
+    set(PARSED_ARGS_DESTINATION ${PROJECT_SOURCE_DIR})
   endif()
 
   if (NOT PARSED_ARGS_BUILD_TYPE)
@@ -77,7 +77,7 @@ function(tl_add_setup)
 
   # -----------------------------------------------------------------------------
 
-  TLOC_LOG_LINE  (STATUS)
+  TLOC_LOG_LINE  (DEBUG)
   TLOC_LOG       (STATUS "Writing ${FILE_NAME}.sh to ${PARSED_ARGS_DESTINATION} ...")
   TLOC_LOG_DETAIL(STATUS "Filename         : ${PARSED_ARGS_NAME}")
   TLOC_LOG_DETAIL(STATUS "Build directory  : ${PARSED_ARGS_BUILD_DIR}")

@@ -62,12 +62,12 @@ function(tl_add_executable)
   endif()
 
   if(NOT PARSED_ARGS_INSTALL_INTERFACE)
-    set(PARSED_ARGS_INSTALL_INTERFACE "install/")
+    set(PARSED_ARGS_INSTALL_INTERFACE "include/")
   endif()
 
   # -----------------------------------------------------------------------------
 
-  TLOC_LOG_LINE  (STATUS)
+  TLOC_LOG_LINE  (DEBUG)
   TLOC_LOG       (STATUS "Adding ${PARSED_ARGS_EXE_NAME} executable")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Headers          : ${PARSED_ARGS_HEADER_FILES}")
   TLOC_LOG_DETAIL(STATUS "${PARSED_ARGS_EXE_NAME} Source Files     : ${PARSED_ARGS_SOURCE_FILES}")

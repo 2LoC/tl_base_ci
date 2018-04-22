@@ -33,6 +33,8 @@ function(tl_add_sdl)
   tl_fetchcontent(
     PROJ_NAME sdl_ext
     PACKAGE_NAME SDL2
+    TARGET_NAME SDL2
+    NAMESPACE SDL2::
     GIT_REPOSITORY "${PARSED_ARGS_GIT_REPOSITORY}"
     GIT_TAG ${PARSED_ARGS_GIT_TAG}
     QUIET OFF

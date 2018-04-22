@@ -45,7 +45,7 @@ function(tl_add_superbuild)
 
   # -----------------------------------------------------------------------------
 
-  TLOC_LOG_LINE  (STATUS)
+  TLOC_LOG_LINE  (DEBUG)
   TLOC_LOG       (STATUS "Writing ${FILE_NAME} Superbuild to ${PARSED_ARGS_DESTINATION} ...")
 
   # -----------------------------------------------------------------------------

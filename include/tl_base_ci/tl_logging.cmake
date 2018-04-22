@@ -1,10 +1,7 @@
 # -----------------------------------------------------------------------------
-
-include_guard()
-
-# -----------------------------------------------------------------------------
 # logging
 
+# -----------------------------------------------------------------------------
 # MODE: same as CMake message(<mode>)
 function(TLOC_LOG MODE MSG)
 
@@ -34,6 +31,14 @@ function(TLOC_LOG MODE MSG)
 
   if(${MODE} STREQUAL "STATUS")
     message(${MODE} "${BoldBlue}${MSG}${ColourReset}")
+  elseif(${MODE} STREQUAL "SUCCESS")
+    message(STATUS "${BoldGreen}${MSG}${ColourReset}")
+  elseif(${MODE} STREQUAL "INFO")
+    message(STATUS "${BoldWhite}${MSG}${ColourReset}")
+  elseif(${MODE} STREQUAL "DEBUG")
+    message(STATUS "${BoldCyan}${MSG}${ColourReset}")
+  elseif(${MODE} STREQUAL "ATTENTION")
+    message(STATUS "${BoldMagenta}${MSG}${ColourReset}")
   elseif(${MODE} STREQUAL "WARNING")
     message(${MODE} "${BoldYellow}${MSG}${ColourReset}")
   elseif(${MODE} STREQUAL "FATAL_ERROR" OR ${MODE} STREQUAL "SEND_ERROR")
@@ -48,6 +53,7 @@ function(TLOC_LOG MODE MSG)
   endif()
 endfunction()
 
+# -----------------------------------------------------------------------------
 # Logs with TLOC_LOG_DETAIL will not appear by default
 # MODE: same as CMake message(<mode>)
 function(TLOC_LOG_DETAIL MODE MSG)
@@ -56,18 +62,22 @@ function(TLOC_LOG_DETAIL MODE MSG)
   endif()
 endfunction()
 
+# -----------------------------------------------------------------------------
 function(TLOC_LOG_LINE MODE)
   TLOC_LOG_DETAIL(${MODE} "----------------------------------------------------------")
 endfunction()
 
+# -----------------------------------------------------------------------------
 function(TLOC_LOG_NEWLINE MODE)
   TLOC_LOG_DETAIL(${MODE} " ")
 endfunction()
 
+# -----------------------------------------------------------------------------
 function(TLOC_LOG_DETAIL_VAR MODE _VAR)
   TLOC_LOG_DETAIL(${MODE} "${_VAR}: ${${_VAR}}")
 endfunction()
 
+# -----------------------------------------------------------------------------
 function(TLOC_LOG_VAR MODE _VAR)
   TLOC_LOG(${MODE} "${_VAR}: ${${_VAR}}")
 endfunction()
